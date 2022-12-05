@@ -17,7 +17,7 @@ public class LoginCheck extends Login {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, "root", "ED308");
+            connection = DriverManager.getConnection(url, "root", "root");
             //System.out.println("Connection successful!");
 
             preparedStatement = connection.prepareStatement(selectUser);
@@ -29,7 +29,7 @@ public class LoginCheck extends Login {
                 Homepage homepage = new Homepage();
             }
             else {
-                JOptionPane.showMessageDialog(null, "Utilizatorul sau parola sunt gresite!");
+                JOptionPane.showMessageDialog(null, "Incorrect username or password!");
             }
             connection.close();
         }

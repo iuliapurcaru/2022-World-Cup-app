@@ -18,7 +18,7 @@ public class Login implements ActionListener {
         frame = new JFrame("World Cup Qatar 2022");
         frame.setSize(700, 500);
         frame.setLocationRelativeTo(null);
-        ImageIcon img = new ImageIcon("2022_FIFA_World_Cup.png");
+        ImageIcon img = new ImageIcon("img/2022_FIFA_World_Cup.png");
         frame.setIconImage(img.getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);

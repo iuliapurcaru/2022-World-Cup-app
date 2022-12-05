@@ -15,7 +15,7 @@ public class Register extends JFrame {
         this.setTitle("World Cup Qatar 2022");
         this.setSize(700, 500);
         this.setLocationRelativeTo(null);
-        ImageIcon img = new ImageIcon("2022_FIFA_World_Cup.png");
+        ImageIcon img = new ImageIcon("img/2022_FIFA_World_Cup.png");
         this.setIconImage(img.getImage());
         this.setVisible(true);
 
@@ -89,7 +89,7 @@ public class Register extends JFrame {
 
                     try {
                         Class.forName("com.mysql.cj.jdbc.Driver");
-                        connection = DriverManager.getConnection(url, "root", "ED308");
+                        connection = DriverManager.getConnection(url, "root", "root");
 
                         preparedStatementUser = connection.prepareStatement(selectUser);
                         preparedStatementUser.setString(1, usernameField.getText());
