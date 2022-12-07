@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Arrays;
@@ -15,8 +14,9 @@ public class Register extends JFrame {
         this.setTitle("World Cup Qatar 2022");
         this.setSize(700, 500);
         this.setLocationRelativeTo(null);
-        ImageIcon img = new ImageIcon("img/2022_FIFA_World_Cup.png");
+        ImageIcon img = new ImageIcon("img/logo.png");
         this.setIconImage(img.getImage());
+        this.setResizable(false);
         this.setVisible(true);
 
         JLabel title;
@@ -73,23 +73,15 @@ public class Register extends JFrame {
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.addActionListener(
                 e -> {
-//                    String emailFieldText = emailField.getText();
-//                    String usernameFieldText = usernameField.getText();
-//                    String passwordFieldText = passwordField.getText();
-//                    String confirmationFieldText = passwordConfirmationField.getText();
-
-                    String url = "jdbc:mysql://localhost:3306/proiect";
 
                     Connection connection;
                     ResultSet resultSetUser, resultSetEmail;
                     PreparedStatement preparedStatementUser, preparedStatementEmail;
-                    //boolean checkUser = false;
                     String selectUser = "SELECT username FROM users WHERE username = ?";
                     String selectEmail = "SELECT email FROM users WHERE email = ?";
 
                     try {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        connection = DriverManager.getConnection(url, "root", "root");
+                        connection = DatabaseConnection.getConnection();
 
                         preparedStatementUser = connection.prepareStatement(selectUser);
                         preparedStatementUser.setString(1, usernameField.getText());
@@ -99,16 +91,10 @@ public class Register extends JFrame {
                         preparedStatementEmail.setString(1, emailField.getText());
                         resultSetEmail = preparedStatementEmail.executeQuery();
 
-                        try {
-                            resultSetUser.next();
-                        }
-                        catch (Exception err) {
+                        if (resultSetUser.next()) {
                             JOptionPane.showMessageDialog(null, "Username is already taken!");
                         }
-//                        if (resultSetUser.next()) {
-//                            JOptionPane.showMessageDialog(null, "Username is already taken!");
-//                        }
-                        if (Objects.equals(usernameField.getText(), "")) {
+                        else if (Objects.equals(usernameField.getText(), "")) {
                             JOptionPane.showMessageDialog(null, "Username cannot be empty!");
                         }
                         else if (resultSetEmail.next()) {
@@ -118,8 +104,7 @@ public class Register extends JFrame {
                             JOptionPane.showMessageDialog(null, "Passwords do not match!");
                         }
                         else {
-                            //checkUser = true;
-                            String insertUser = "INSERT INTO users (`Username`, `Email`, `Password`, `FavouriteCountry1ID`, `FavouriteCountry2ID`, `FavouriteCountry3ID`) values (?, ?, ?, NULL, NULL, NULL)";
+                            String insertUser = "INSERT INTO users (`Username`, `Email`, `Password`, `FavouriteCountryID`) values (?, ?, ?, NULL)";
                             PreparedStatement preparedStatement;
                             preparedStatement = connection.prepareStatement(insertUser);
                             preparedStatement.setString(1, usernameField.getText());
@@ -136,10 +121,6 @@ public class Register extends JFrame {
                         System.out.println(err);
                     }
 
-                    //this.dispose();
-                    //Register register = new Register();
-
-                    //Login login = new Login();
                 }
 
         );

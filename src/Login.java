@@ -1,29 +1,27 @@
 import java.awt.*;
 import java.sql.*;
-import java.sql.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
 import javax.swing.*;
 
-public class Login implements ActionListener {
+public class Login extends JFrame implements ActionListener {
 
-    JFrame frame;
     JTextArea textArea;
 
     public Login() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
-        frame = new JFrame("World Cup Qatar 2022");
-        frame.setSize(700, 500);
-        frame.setLocationRelativeTo(null);
-        ImageIcon img = new ImageIcon("img/2022_FIFA_World_Cup.png");
-        frame.setIconImage(img.getImage());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
+        this.setTitle("World Cup Qatar 2022");
+        this.setSize(700, 500);
+        this.setLocationRelativeTo(null);
+        ImageIcon img = new ImageIcon("img/logo.png");
+        this.setIconImage(img.getImage());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.add(panel);
 
-        Rectangle rectangle = frame.getBounds();
+        Rectangle rectangle = this.getBounds();
         int height = rectangle.height;
         int width = rectangle.width;
 
@@ -65,7 +63,7 @@ public class Login implements ActionListener {
                     String usernameFieldText = usernameField.getText();
                     String passwordFieldText = passwordField.getText();
                     LoginCheck check = new LoginCheck(usernameFieldText, passwordFieldText);
-                    frame.dispose();
+                    this.dispose();
                 }
 
         );
@@ -79,7 +77,7 @@ public class Login implements ActionListener {
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.addActionListener(
                 e -> {
-                    frame.dispose();
+                    this.dispose();
                     Register register = new Register();
                 }
 
@@ -94,14 +92,14 @@ public class Login implements ActionListener {
         guestButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         guestButton.addActionListener(
                 e -> {
-                    frame.dispose();
+                    this.dispose();
                     Homepage homepage = new Homepage();
                 }
 
         );
         panel.add(guestButton);
 
-        frame.setVisible(true);
+        this.setVisible(true);
     }
 
 
@@ -140,7 +138,4 @@ public class Login implements ActionListener {
         }
     }
 
-//    public static void main(String args[]) {
-//        Login test = new Login();
-//    }
 }

@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Homepage extends JFrame{
+public class Homepage extends JFrame implements ActionListener {
     Homepage(){
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -9,8 +11,9 @@ public class Homepage extends JFrame{
         this.setTitle("World Cup Qatar 2022");
         this.setSize(700, 500);
         this.setLocationRelativeTo(null);
-        ImageIcon img = new ImageIcon("img/2022_FIFA_World_Cup.png");
+        ImageIcon img = new ImageIcon("img/logo.png");
         this.setIconImage(img.getImage());
+        this.setResizable(false);
         this.setVisible(true);
 
         JLabel title = new JLabel("Welcome!");
@@ -36,5 +39,10 @@ public class Homepage extends JFrame{
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panel);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }
