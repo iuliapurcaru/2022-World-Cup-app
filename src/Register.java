@@ -12,7 +12,7 @@ public class Register extends JFrame {
         panel.setLayout(null);
 
         this.setTitle("World Cup Qatar 2022");
-        this.setSize(700, 500);
+        this.setSize(1200, 857);
         this.setLocationRelativeTo(null);
         ImageIcon img = new ImageIcon("img/logo.png");
         this.setIconImage(img.getImage());
