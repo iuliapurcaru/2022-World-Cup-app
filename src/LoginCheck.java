@@ -7,7 +7,6 @@ import java.util.Objects;
 public class LoginCheck extends Login {
 
     LoginCheck(String username, String password) {
-        String url = "jdbc:mysql://localhost:3306/proiect";
 
         Connection connection;
         ResultSet resultSet;

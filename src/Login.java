@@ -1,12 +1,7 @@
 import java.awt.*;
-import java.sql.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class Login extends JFrame implements ActionListener {
-
-    JTextArea textArea;
+public class Login extends JFrame {
 
     public Login() {
         JPanel panel = new JPanel();
@@ -20,10 +15,6 @@ public class Login extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.add(panel);
-
-        Rectangle rectangle = this.getBounds();
-        int height = rectangle.height;
-        int width = rectangle.width;
 
         JLabel title;
         title = new JLabel("LOGIN");
@@ -100,42 +91,6 @@ public class Login extends JFrame implements ActionListener {
         panel.add(guestButton);
 
         this.setVisible(true);
-    }
-
-
-    @Override
-    public void actionPerformed(ActionEvent ev) {
-
-        String url = "jdbc:mysql://localhost:3306/proiect";
-        String username = "root";
-        String password = "ED308";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(url, username, password);
-
-            System.out.println("Connection successful!");
-
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from utilizatori");
-
-            while (resultSet.next()) {
-                textArea.setText(textArea.getText().concat(
-                        resultSet.getString(1) + " " +
-                                resultSet.getString(2) + " " +
-                                resultSet.getString(3) + " " +
-                                resultSet.getInt(4) + " " +
-                                resultSet.getString(5) + " " +
-                                resultSet.getString(6) + " " +
-                                resultSet.getString(7) + "\n"));
-            }
-
-            connection.close();
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
     }
 
 }
