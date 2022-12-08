@@ -11,8 +11,8 @@ public class Homepage extends JFrame {
         this.setTitle("World Cup Qatar 2022");
         this.setSize(1200, 857);
         this.setLocationRelativeTo(null);
-        ImageIcon img = new ImageIcon("img/logo.png");
-        this.setIconImage(img.getImage());
+        ImageIcon icon = new ImageIcon("img/logo.png");
+        this.setIconImage(icon.getImage());
         this.setResizable(false);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,6 +26,7 @@ public class Homepage extends JFrame {
 
         JButton logoutButton;
         logoutButton = new JButton("LOGOUT");
+        logoutButton.setFont(new Font("Arial", Font.BOLD, 15));
         logoutButton.setBounds(0,0,119,90);
         logoutButton.setForeground(Color.WHITE);
         logoutButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
@@ -40,8 +41,12 @@ public class Homepage extends JFrame {
         panel.add(logoutButton);
 
         JButton homeButton;
-        homeButton = new JButton("HOME");
-        homeButton.setBounds(0,720,242,90);
+        icon = new ImageIcon("img/universalButtons/home.png");
+        homeButton = new JButton("HOME", icon);
+        homeButton.setFont(new Font("Arial", Font.BOLD, 15));
+        homeButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        homeButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        homeButton.setBounds(0,720,238,90);
         homeButton.setForeground(Color.WHITE);
         homeButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -57,8 +62,12 @@ public class Homepage extends JFrame {
         panel.add(homeButton);
 
         JButton teamsButton;
-        teamsButton = new JButton("TEAMS");
-        teamsButton.setBounds(242,720,243,90);
+        icon = new ImageIcon("img/universalButtons/teams.png");
+        teamsButton = new JButton("TEAMS", icon);
+        teamsButton.setFont(new Font("Arial", Font.BOLD, 15));
+        teamsButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        teamsButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        teamsButton.setBounds(238,720,237,90);
         teamsButton.setForeground(Color.WHITE);
         teamsButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         teamsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -74,8 +83,12 @@ public class Homepage extends JFrame {
         panel.add(teamsButton);
 
         JButton matchesButton;
-        matchesButton = new JButton("MATCHES");
-        matchesButton.setBounds(485,720,242,90);
+        icon = new ImageIcon("img/universalButtons/matches.png");
+        matchesButton = new JButton("MATCHES", icon);
+        matchesButton.setFont(new Font("Arial", Font.BOLD, 15));
+        matchesButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        matchesButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        matchesButton.setBounds(475,720,238,90);
         matchesButton.setForeground(Color.WHITE);
         matchesButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         matchesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -91,8 +104,12 @@ public class Homepage extends JFrame {
         panel.add(matchesButton);
 
         JButton groupsButton;
-        groupsButton = new JButton("GROUPS");
-        groupsButton.setBounds(727,720,243,90);
+        icon = new ImageIcon("img/universalButtons/groups.png");
+        groupsButton = new JButton("GROUPS", icon);
+        groupsButton.setFont(new Font("Arial", Font.BOLD, 15));
+        groupsButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        groupsButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        groupsButton.setBounds(713,720,237,90);
         groupsButton.setForeground(Color.WHITE);
         groupsButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         groupsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -108,8 +125,12 @@ public class Homepage extends JFrame {
         panel.add(groupsButton);
 
         JButton knockoutButton;
-        knockoutButton = new JButton("KNOCKOUT");
-        knockoutButton.setBounds(970,720,242,90);
+        icon = new ImageIcon("img/universalButtons/knockout.png");
+        knockoutButton = new JButton("KNOCKOUT", icon);
+        knockoutButton.setFont(new Font("Arial", Font.BOLD, 15));
+        knockoutButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        knockoutButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        knockoutButton.setBounds(950,720,238,90);
         knockoutButton.setForeground(Color.WHITE);
         knockoutButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         knockoutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -125,7 +146,11 @@ public class Homepage extends JFrame {
         panel.add(knockoutButton);
 
         JButton accountButton;
-        accountButton = new JButton("MY ACCOUNT");
+        icon = new ImageIcon("img/universalButtons/account.png");
+        accountButton = new JButton("ACCOUNT", icon);
+        accountButton.setFont(new Font("Arial", Font.BOLD, 15));
+        accountButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        accountButton.setHorizontalTextPosition(SwingConstants.CENTER);
         accountButton.setBounds(1065,0,119,90);
         accountButton.setForeground(Color.WHITE);
         accountButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
