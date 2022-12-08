@@ -22,9 +22,9 @@ public class Homepage extends JFrame{
             panel.add(buttons[i]);
         }
 
-        JLabel title = new JLabel("Welcome!");
-        title.setBounds(290, 50, 136, 20);
-        title.setFont(new Font("SansSerif Bold", Font.BOLD, 21));
+        JLabel title = new JLabel("HOME");
+        title.setBounds(290, 30, 136, 40);
+        title.setFont(new Font("Arial", Font.BOLD, 30));
         title.setForeground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         panel.add(title);
     }

@@ -30,7 +30,7 @@ public class Buttons extends JFrame {
         homeButton.setFont(new Font("Arial", Font.BOLD, 15));
         homeButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         homeButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        homeButton.setBounds(0, 720, 238, 90);
+        homeButton.setBounds(0, 720, 236, 90);
         homeButton.setForeground(Color.WHITE);
         homeButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -50,7 +50,7 @@ public class Buttons extends JFrame {
         teamsButton.setFont(new Font("Arial", Font.BOLD, 15));
         teamsButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         teamsButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        teamsButton.setBounds(238, 720, 237, 90);
+        teamsButton.setBounds(236, 720, 237, 90);
         teamsButton.setForeground(Color.WHITE);
         teamsButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         teamsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -71,7 +71,7 @@ public class Buttons extends JFrame {
         matchesButton.setFont(new Font("Arial", Font.BOLD, 15));
         matchesButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         matchesButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        matchesButton.setBounds(475, 720, 238, 90);
+        matchesButton.setBounds(473, 720, 236, 90);
         matchesButton.setForeground(Color.WHITE);
         matchesButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         matchesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -92,7 +92,7 @@ public class Buttons extends JFrame {
         groupsButton.setFont(new Font("Arial", Font.BOLD, 15));
         groupsButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         groupsButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        groupsButton.setBounds(713, 720, 237, 90);
+        groupsButton.setBounds(709, 720, 237, 90);
         groupsButton.setForeground(Color.WHITE);
         groupsButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         groupsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -113,7 +113,7 @@ public class Buttons extends JFrame {
         knockoutButton.setFont(new Font("Arial", Font.BOLD, 15));
         knockoutButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         knockoutButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        knockoutButton.setBounds(950, 720, 238, 90);
+        knockoutButton.setBounds(946, 720, 236, 90);
         knockoutButton.setForeground(Color.WHITE);
         knockoutButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         knockoutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

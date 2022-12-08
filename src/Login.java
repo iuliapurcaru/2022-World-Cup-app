@@ -10,41 +10,63 @@ public class Login extends JFrame {
         this.setTitle("World Cup Qatar 2022");
         this.setSize(1200, 857);
         this.setLocationRelativeTo(null);
-        ImageIcon img = new ImageIcon("img/logo.png");
-        this.setIconImage(img.getImage());
+        ImageIcon icon = new ImageIcon("img/logo.png");
+        this.setIconImage(icon.getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.add(panel);
 
+        JLabel label = new JLabel();
+        label.setIcon(new ImageIcon("img/background.png"));
+        Dimension size = label.getPreferredSize();
+        label.setBounds(0, 0, size.width, size.height);
+        panel.add(label);
+
+        Image img = Toolkit.getDefaultToolkit().getImage("img/background.png");
+//        this.setContentPane(new JPanel() {
+//            @Override
+//            public void paintComponent(Graphics g) {
+//                super.paintComponent(g);
+//                g.drawImage(img, 0, 0, null);
+//            }
+//        });
+
+        panel.setBackground(Color.getHSBColor(233.74f, 0.97f, 0.451f));
+
         JLabel title;
-        title = new JLabel("LOGIN");
-        title.setBounds(310,50,70,20);
-        title.setFont(new Font("SansSerif Bold", Font.BOLD, 21));
+        title = new JLabel("SIGN IN");
+        title.setBounds(873, 100, 136, 40);
+        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title.setForeground(Color.WHITE);
         panel.add(title);
 
         JLabel username;
         JTextField usernameField;
         username = new JLabel("Username");
-        username.setBounds(250,108,70,20);
-        //username.setFont(new Font("Verdana", Font.PLAIN, 18));
+        username.setBounds(844,238,105,20);
+        username.setForeground(Color.WHITE);
+        username.setFont(new Font("Century Gothic", Font.BOLD, 21));
         panel.add(username);
         usernameField = new JTextField();
-        usernameField.setBounds(250,127,193,28);
+        usernameField.setBounds(844,268,193,28);
+        usernameField.setFont(new Font("Century Gothic", Font.PLAIN, 21));
         panel.add(usernameField);
 
         JLabel password;
         JPasswordField passwordField;
         password = new JLabel("Password");
-        password.setBounds(250,155,70,20);
-        //password.setFont(new Font("Verdana", Font.PLAIN, 18));
+        password.setBounds(844,365,100,20);
+        password.setForeground(Color.WHITE);
+        password.setFont(new Font("Century Gothic", Font.BOLD, 21));
         panel.add(password);
         passwordField = new JPasswordField();
-        passwordField.setBounds(250,175,193,28);
+        passwordField.setBounds(844,395,200,60);
+        passwordField.setFont(new Font("Century Gothic", Font.PLAIN, 21));
         panel.add(passwordField);
 
         JButton loginButton;
         loginButton = new JButton("Login");
-        loginButton.setBounds(250,210, 93,28);
+        loginButton.setBounds(844,520, 93,28);
         loginButton.setForeground(Color.WHITE);
         loginButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -62,7 +84,7 @@ public class Login extends JFrame {
 
         JButton registerButton;
         registerButton = new JButton("Register");
-        registerButton.setBounds(349, 210, 93, 28);
+        registerButton.setBounds(943, 520, 93, 28);
         registerButton.setForeground(Color.WHITE);
         registerButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -77,7 +99,7 @@ public class Login extends JFrame {
 
         JButton guestButton;
         guestButton = new JButton("Continue as guest");
-        guestButton.setBounds(250,245,193,28);
+        guestButton.setBounds(844,705,193,28);
         guestButton.setForeground(Color.WHITE);
         guestButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
         guestButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -92,5 +114,12 @@ public class Login extends JFrame {
 
         this.setVisible(true);
     }
+
+//    public void paint(Graphics g)
+//    {
+//        Image img = Toolkit.getDefaultToolkit().getImage("img/background.png");
+//        g.drawImage(img, 0, 0, null);
+//    }
+
 
 }
