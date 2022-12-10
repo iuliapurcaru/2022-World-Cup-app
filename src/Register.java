@@ -11,6 +11,9 @@ public class Register extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
+        JLabel optionPaneFont = new JLabel();
+        optionPaneFont.setFont(new Font("Century Gothic", Font.BOLD, 18));
+
         this.setTitle("World Cup Qatar 2022");
         this.setSize(1200, 857);
         this.setLocationRelativeTo(null);
@@ -19,57 +22,74 @@ public class Register extends JFrame {
         this.setResizable(false);
         this.setVisible(true);
 
+        JLabel background = new JLabel();
+        background.setIcon(new ImageIcon("img/background.png"));
+        Dimension size = background.getPreferredSize();
+        background.setBounds(0, 0, size.width, size.height);
+        panel.add(background);
+        panel.setBackground(Color.getHSBColor(233.74f, 0.97f, 0.401f));
+
         JLabel title;
-        title = new JLabel("REGISTER");
-        title.setBounds(300,50,140,20);
-        title.setFont(new Font("SansSerif Bold", Font.BOLD, 21));
+        title = new JLabel("SIGN UP");
+        title.setBounds(791, 120, 160, 40);
+        title.setFont(new Font("Century Gothic", Font.BOLD, 37));
+        title.setForeground(Color.WHITE);
         panel.add(title);
 
         JLabel email;
         JTextField emailField;
         email = new JLabel("Email");
-        email.setBounds(250,108,70,20);
-        //username.setFont(new Font("Verdana", Font.PLAIN, 18));
+        email.setBounds(791,220,110,20);
+        email.setForeground(Color.WHITE);
+        email.setFont(new Font("Century Gothic", Font.BOLD, 20));
         panel.add(email);
         emailField = new JTextField();
-        emailField.setBounds(250,127,193,28);
+        emailField.setBounds(791,252,300,40);
+        emailField.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         panel.add(emailField);
 
         JLabel username;
         JTextField usernameField;
         username = new JLabel("Username");
-        username.setBounds(250,155,70,20);
-        //username.setFont(new Font("Verdana", Font.PLAIN, 18));
+        username.setBounds(791,330,110,20);
+        username.setForeground(Color.WHITE);
+        username.setFont(new Font("Century Gothic", Font.BOLD, 20));
         panel.add(username);
         usernameField = new JTextField();
-        usernameField.setBounds(250,174,193,28);
+        usernameField.setBounds(791,362,300,40);
+        usernameField.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         panel.add(usernameField);
 
         JLabel password;
         JPasswordField passwordField;
         password = new JLabel("Password");
-        password.setBounds(250,202,70,20);
-        //password.setFont(new Font("Verdana", Font.PLAIN, 18));
+        password.setBounds(791,440,110,20);
+        password.setForeground(Color.WHITE);
+        password.setFont(new Font("Century Gothic", Font.BOLD, 20));
         panel.add(password);
         passwordField = new JPasswordField();
-        passwordField.setBounds(250,221,193,28);
+        passwordField.setBounds(791,472,300,40);
+        passwordField.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         panel.add(passwordField);
 
-        JLabel passwordConfirmation;
-        JPasswordField passwordConfirmationField;
-        passwordConfirmation = new JLabel("Confirm password");
-        passwordConfirmation.setBounds(250,249,140,20);
-        //passwordConfirmation.setFont(new Font("Verdana", Font.PLAIN, 18));
-        panel.add(passwordConfirmation);
-        passwordConfirmationField = new JPasswordField();
-        passwordConfirmationField.setBounds(250,268,193,28);
-        panel.add(passwordConfirmationField);
+        JLabel confirmPassword;
+        JPasswordField confirmPasswordField;
+        confirmPassword = new JLabel("Confirm password");
+        confirmPassword.setBounds(791,550,250,20);
+        confirmPassword.setForeground(Color.WHITE);
+        confirmPassword.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        panel.add(confirmPassword);
+        confirmPasswordField = new JPasswordField();
+        confirmPasswordField.setBounds(791,582,300,40);
+        confirmPasswordField.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+        panel.add(confirmPasswordField);
 
         JButton registerButton;
-        registerButton = new JButton("Register");
-        registerButton.setBounds(250,350,193,28);
+        registerButton = new JButton("REGISTER");
+        registerButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        registerButton.setBounds(791,660, 130,40);
         registerButton.setForeground(Color.WHITE);
-        registerButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
+        registerButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.addActionListener(
                 e -> {
@@ -92,16 +112,24 @@ public class Register extends JFrame {
                         resultSetEmail = preparedStatementEmail.executeQuery();
 
                         if (resultSetUser.next()) {
-                            JOptionPane.showMessageDialog(null, "Username is already taken!");
+                            optionPaneFont.setText("Username is already taken!");
+                            JOptionPane.showMessageDialog(null, optionPaneFont);
                         }
                         else if (Objects.equals(usernameField.getText(), "")) {
-                            JOptionPane.showMessageDialog(null, "Username cannot be empty!");
+                            optionPaneFont.setText("Username cannot be empty!");
+                            JOptionPane.showMessageDialog(null, optionPaneFont);
                         }
                         else if (resultSetEmail.next()) {
-                            JOptionPane.showMessageDialog(null, "There already exists an account with this email!");
+                            optionPaneFont.setText("There already exists an account with this email!");
+                            JOptionPane.showMessageDialog(null, optionPaneFont);
                         }
-                        else if (!Arrays.equals(passwordField.getPassword(), passwordConfirmationField.getPassword())) {
-                            JOptionPane.showMessageDialog(null, "Passwords do not match!");
+                        else if (!Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())) {
+                            optionPaneFont.setText("Passwords do not match!");
+                            JOptionPane.showMessageDialog(null, optionPaneFont);
+                        }
+                        else if (passwordField.getText() == " ") {
+                            optionPaneFont.setText("Password cannot be empty!");
+                            JOptionPane.showMessageDialog(null, optionPaneFont);
                         }
                         else {
                             String insertUser = "INSERT INTO users (`Username`, `Email`, `Password`, `FavouriteCountryID`) values (?, ?, ?, NULL)";
@@ -126,11 +154,18 @@ public class Register extends JFrame {
         );
         panel.add(registerButton);
 
+        JLabel account = new JLabel("Already have an account?");
+        account.setBounds(715, 25, 250,20);
+        account.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        account.setForeground(Color.WHITE);
+        panel.add(account);
+
         JButton backButton;
-        backButton = new JButton("Back");
-        backButton.setBounds(10,10,93,28);
+        backButton = new JButton("SIGN IN");
+        backButton.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        backButton.setBounds(970,15,130,40);
         backButton.setForeground(Color.WHITE);
-        backButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
+        backButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         backButton.addActionListener(
                 e -> {

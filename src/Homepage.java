@@ -3,21 +3,21 @@ import java.awt.*;
 
 public class Homepage extends JFrame{
     Homepage() {
-        JFrame frame = new JFrame();
+
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
-        frame.setTitle("World Cup Qatar 2022");
-        frame.setSize(1200, 857);
-        frame.setLocationRelativeTo(null);
+        this.setTitle("World Cup Qatar 2022");
+        this.setSize(1200, 857);
+        this.setLocationRelativeTo(null);
         ImageIcon icon = new ImageIcon("img/logo.png");
-        frame.setIconImage(icon.getImage());
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
+        this.setIconImage(icon.getImage());
+        this.setResizable(false);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.add(panel);
 
-        JButton[] buttons = Buttons.getButtons(frame);
+        JButton[] buttons = Buttons.getButtons(this);
         for (int i = 0; i < 7; i++) {
             panel.add(buttons[i]);
         }

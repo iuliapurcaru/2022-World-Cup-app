@@ -14,63 +14,52 @@ public class Login extends JFrame {
         this.setIconImage(icon.getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        //this.add(panel);
-        this.setContentPane(panel);
+        this.add(panel);
 
-        JLabel label = new JLabel();
-        label.setIcon(new ImageIcon("img/background.png"));
-        Dimension size = label.getPreferredSize();
-        label.setBounds(0, 0, size.width, size.height);
-        panel.add(label);
-
-//        Image img = Toolkit.getDefaultToolkit().getImage("img/background.png");
-//        this.setContentPane(new JPanel() {
-//            @Override
-//            public void paintComponent(Graphics g) {
-//                super.paintComponent(g);
-//                g.drawImage(img, 0, 0, null);
-//            }
-//        });
-
-        panel.setBackground(Color.getHSBColor(233.74f, 0.97f, 0.451f));
+        JLabel background = new JLabel();
+        background.setIcon(new ImageIcon("img/background.png"));
+        Dimension size = background.getPreferredSize();
+        background.setBounds(0, 0, size.width, size.height);
+        panel.add(background);
+        panel.setBackground(Color.getHSBColor(233.74f, 0.97f, 0.401f));
 
         JLabel title;
         title = new JLabel("SIGN IN");
         title.setBounds(791, 150, 136, 40);
-        title.setFont(new Font("Century Gothic", Font.BOLD, 35));
+        title.setFont(new Font("Century Gothic", Font.BOLD, 37));
         title.setForeground(Color.WHITE);
         panel.add(title);
 
         JLabel username;
         JTextField usernameField;
         username = new JLabel("Username");
-        username.setBounds(791,250,105,20);
+        username.setBounds(791,250,110,20);
         username.setForeground(Color.WHITE);
-        username.setFont(new Font("Century Gothic", Font.BOLD, 21));
+        username.setFont(new Font("Century Gothic", Font.BOLD, 20));
         panel.add(username);
         usernameField = new JTextField();
-        usernameField.setBounds(791,280,300,38);
-        usernameField.setFont(new Font("Century Gothic", Font.PLAIN, 21));
+        usernameField.setBounds(791,282,300,40);
+        usernameField.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         panel.add(usernameField);
 
         JLabel password;
         JPasswordField passwordField;
         password = new JLabel("Password");
-        password.setBounds(791,355,100,20);
+        password.setBounds(791,360,110,20);
         password.setForeground(Color.WHITE);
-        password.setFont(new Font("Century Gothic", Font.BOLD, 21));
+        password.setFont(new Font("Century Gothic", Font.BOLD, 20));
         panel.add(password);
         passwordField = new JPasswordField();
-        passwordField.setBounds(791,385,300,38);
-        passwordField.setFont(new Font("Century Gothic", Font.PLAIN, 21));
+        passwordField.setBounds(791,392,300,40);
+        passwordField.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         panel.add(passwordField);
 
         JButton loginButton;
         loginButton = new JButton("SIGN IN");
-        loginButton.setFont(new Font("Century Gothic", Font.BOLD, 15));
-        loginButton.setBounds(791,500, 180,38);
+        loginButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        loginButton.setBounds(791,470, 130,40);
         loginButton.setForeground(Color.WHITE);
-        loginButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
+        loginButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loginButton.addActionListener(
                 e -> {
@@ -84,12 +73,18 @@ public class Login extends JFrame {
         );
         panel.add(loginButton);
 
+        JLabel noAccount = new JLabel("Don't have an account?");
+        noAccount.setBounds(791, 548, 250,20);
+        noAccount.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        noAccount.setForeground(Color.WHITE);
+        panel.add(noAccount);
+
         JButton registerButton;
         registerButton = new JButton("REGISTER");
-        loginButton.setFont(new Font("Century Gothic", Font.BOLD, 15));
-        registerButton.setBounds(791,600, 180,38);
+        registerButton.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        registerButton.setBounds(791,588, 130,40);
         registerButton.setForeground(Color.WHITE);
-        registerButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
+        registerButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.addActionListener(
                 e -> {
@@ -101,10 +96,8 @@ public class Login extends JFrame {
         panel.add(registerButton);
 
         JButton guestButton;
-        guestButton = new JButton("Continue as guest");
-        guestButton.setBounds(844,705,193,28);
-        guestButton.setForeground(Color.WHITE);
-        guestButton.setBackground(Color.getHSBColor(348.92f, 0.828f, 0.6157f));
+        guestButton = new JButton();
+        guestButton.setBounds(0,0,50,50);
         guestButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         guestButton.addActionListener(
                 e -> {

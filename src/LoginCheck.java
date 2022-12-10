@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ public class LoginCheck extends Login {
         ResultSet resultSet;
         PreparedStatement preparedStatement;
         String selectUser = "SELECT password FROM users WHERE username = ?";
+        UIManager.put("OptionPane.minimumSize", new Dimension(100,50));
 
         try {
             connection = DatabaseConnection.getConnection();
@@ -24,7 +26,9 @@ public class LoginCheck extends Login {
                 Homepage homepage = new Homepage();
             }
             else {
-                JOptionPane.showMessageDialog(null, "Incorrect username or password!");
+                JLabel label = new JLabel("Incorrect username or password!");
+                label.setFont(new Font("Arial", Font.PLAIN, 18));
+                JOptionPane.showMessageDialog(null, label);
             }
             connection.close();
         }
