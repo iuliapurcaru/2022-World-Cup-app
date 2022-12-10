@@ -162,10 +162,10 @@ public class Buttons {
     public static void addButtonMouseAdapter(JButton button) {
         button.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
-                button.setBackground(Color.getHSBColor(200.74f, 0.6909f, 0.516f));
+                button.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
             }
             public void mouseExited(MouseEvent evt) {
-                button.setBackground(Color.getHSBColor(233.74f, 0.97f, 0.451f));
+                button.setBackground(Color.getHSBColor(233.74f, 0.97f, 0.401f));
             }
         });
 
