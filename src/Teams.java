@@ -1,11 +1,7 @@
 import javax.swing.*;
-import java.awt.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
-public class Homepage extends JFrame{
-    Homepage() {
+public class Teams extends JFrame {
+    Teams() {
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -24,7 +20,7 @@ public class Homepage extends JFrame{
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
-        buttons[7].setText("HOME");
+        buttons[7].setText("TEAMS");
 
     }
 

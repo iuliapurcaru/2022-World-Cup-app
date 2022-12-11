@@ -11,9 +11,6 @@ public class Register extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
-        JLabel optionPaneFont = new JLabel();
-        optionPaneFont.setFont(new Font("Century Gothic", Font.BOLD, 18));
-
         this.setTitle("World Cup Qatar 2022");
         this.setSize(1200, 857);
         this.setLocationRelativeTo(null);
@@ -94,61 +91,11 @@ public class Register extends JFrame {
         registerButton.addActionListener(
                 e -> {
 
-                    Connection connection;
-                    ResultSet resultSetUser, resultSetEmail;
-                    PreparedStatement preparedStatementUser, preparedStatementEmail;
-                    String selectUser = "SELECT username FROM users WHERE username = ?";
-                    String selectEmail = "SELECT email FROM users WHERE email = ?";
-
-                    try {
-                        connection = DatabaseConnection.getConnection();
-
-                        preparedStatementUser = connection.prepareStatement(selectUser);
-                        preparedStatementUser.setString(1, usernameField.getText());
-                        resultSetUser = preparedStatementUser.executeQuery();
-
-                        preparedStatementEmail = connection.prepareStatement(selectEmail);
-                        preparedStatementEmail.setString(1, emailField.getText());
-                        resultSetEmail = preparedStatementEmail.executeQuery();
-
-                        if (resultSetUser.next()) {
-                            optionPaneFont.setText("Username is already taken!");
-                            JOptionPane.showMessageDialog(null, optionPaneFont);
-                        }
-                        else if (Objects.equals(usernameField.getText(), "")) {
-                            optionPaneFont.setText("Username cannot be empty!");
-                            JOptionPane.showMessageDialog(null, optionPaneFont);
-                        }
-                        else if (resultSetEmail.next()) {
-                            optionPaneFont.setText("There already exists an account with this email!");
-                            JOptionPane.showMessageDialog(null, optionPaneFont);
-                        }
-                        else if (!Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())) {
-                            optionPaneFont.setText("Passwords do not match!");
-                            JOptionPane.showMessageDialog(null, optionPaneFont);
-                        }
-                        else if (passwordField.getText() == " ") {
-                            optionPaneFont.setText("Password cannot be empty!");
-                            JOptionPane.showMessageDialog(null, optionPaneFont);
-                        }
-                        else {
-                            String insertUser = "INSERT INTO users (`Username`, `Email`, `Password`, `FavouriteCountryID`) values (?, ?, ?, NULL)";
-                            PreparedStatement preparedStatement;
-                            preparedStatement = connection.prepareStatement(insertUser);
-                            preparedStatement.setString(1, usernameField.getText());
-                            preparedStatement.setString(2, emailField.getText());
-                            preparedStatement.setString(3, passwordField.getText());
-                            preparedStatement.executeUpdate();
-                            this.dispose();
-                            Login login = new Login();
-                        }
-
-                        connection.close();
-                    }
-                    catch (Exception err){
-                        System.out.println(err);
-                    }
-
+                    RegisterAccount.registerAccount(usernameField.getText(),
+                                                    emailField.getText(),
+                                                    passwordField.getText(),
+                                                    confirmPasswordField.getText(),
+                                              this);
                 }
 
         );
@@ -160,21 +107,21 @@ public class Register extends JFrame {
         account.setForeground(Color.WHITE);
         panel.add(account);
 
-        JButton backButton;
-        backButton = new JButton("SIGN IN");
-        backButton.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        backButton.setBounds(970,15,130,40);
-        backButton.setForeground(Color.WHITE);
-        backButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
-        backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        backButton.addActionListener(
+        JButton signInButton;
+        signInButton = new JButton("SIGN IN");
+        signInButton.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        signInButton.setBounds(970,15,130,40);
+        signInButton.setForeground(Color.WHITE);
+        signInButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
+        signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        signInButton.addActionListener(
                 e -> {
                     this.dispose();
                     Login login = new Login();
                 }
 
         );
-        panel.add(backButton);
+        panel.add(signInButton);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panel);

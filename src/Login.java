@@ -54,24 +54,20 @@ public class Login extends JFrame {
         passwordField.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         panel.add(passwordField);
 
-        JButton loginButton;
-        loginButton = new JButton("SIGN IN");
-        loginButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
-        loginButton.setBounds(791,470, 130,40);
-        loginButton.setForeground(Color.WHITE);
-        loginButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
-        loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        loginButton.addActionListener(
+        JButton signInButton;
+        signInButton = new JButton("SIGN IN");
+        signInButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        signInButton.setBounds(791,470, 130,40);
+        signInButton.setForeground(Color.WHITE);
+        signInButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
+        signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        signInButton.addActionListener(
                 e -> {
-                    this.revalidate();
-                    String usernameFieldText = usernameField.getText();
-                    String passwordFieldText = passwordField.getText();
-                    LoginCheck check = new LoginCheck(usernameFieldText, passwordFieldText);
-                    this.dispose();
+                    LoginCheck.loginCheck(usernameField.getText(), passwordField.getText(), this);
                 }
 
         );
-        panel.add(loginButton);
+        panel.add(signInButton);
 
         JLabel noAccount = new JLabel("Don't have an account?");
         noAccount.setBounds(791, 548, 250,20);
@@ -110,12 +106,5 @@ public class Login extends JFrame {
 
         this.setVisible(true);
     }
-
-//    public void paint(Graphics g)
-//    {
-//        Image img = Toolkit.getDefaultToolkit().getImage("img/background.png");
-//        g.drawImage(img, 0, 0, null);
-//    }
-
 
 }
