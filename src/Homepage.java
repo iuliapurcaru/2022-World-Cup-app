@@ -9,7 +9,7 @@ public class Homepage extends JFrame{
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(Color.getHSBColor(0, 0, 1f));
+        panel.setBackground(Color.WHITE);
 
         this.setTitle("World Cup Qatar 2022");
         this.setSize(1200, 857);
@@ -26,6 +26,20 @@ public class Homepage extends JFrame{
             panel.add(buttons[i]);
         }
         buttons[7].setText("HOME");
+
+        JButton line1 = new JButton();
+        line1.setBounds(0, 307, 1200, 1);
+        line1.setBorderPainted(false);
+        line1.setEnabled(false);
+        line1.setBackground(Color.LIGHT_GRAY);
+        panel.add(line1);
+
+        JButton line2 = new JButton();
+        line2.setBounds(0, 502, 1200, 1);
+        line2.setBorderPainted(false);
+        line2.setEnabled(false);
+        line2.setBackground(Color.LIGHT_GRAY);
+        panel.add(line2);
 
 
         JLabel[] newsTitles = new JLabel[3];

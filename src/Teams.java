@@ -1,10 +1,12 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class Teams extends JFrame {
     Teams() {
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
+        panel.setBackground(Color.WHITE);
 
         this.setTitle("World Cup Qatar 2022");
         this.setSize(1200, 857);

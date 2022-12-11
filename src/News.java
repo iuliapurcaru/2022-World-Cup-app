@@ -10,7 +10,7 @@ public class News {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(Color.getHSBColor(0, 0, 1f));
+        panel.setBackground(Color.WHITE);
 
         frame.setTitle("World Cup Qatar 2022");
         frame.setSize(1200, 857);
