@@ -9,6 +9,9 @@ public class LoginCheck {
 
         public static void loginCheck(String username, String password, JFrame frame) {
 
+            JLabel optionPaneFont = new JLabel();
+            optionPaneFont.setFont(new Font("Century Gothic", Font.BOLD, 18));
+
             Connection connection;
             ResultSet resultSet;
             PreparedStatement preparedStatement;

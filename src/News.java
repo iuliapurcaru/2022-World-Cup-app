@@ -27,8 +27,8 @@ public class News extends JFrame{
         }
 
         JTextArea tf = new JTextArea();
-        tf.setBounds(50,200,500,200);
-        tf.setFont(new Font("Century Gothic", Font.PLAIN, 21));
+        tf.setBounds(50,170,550,700);
+        tf.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         tf.setEditable(false);
         tf.setWrapStyleWord(true);
         tf.setLineWrap(true);
@@ -39,28 +39,26 @@ public class News extends JFrame{
             Connection connection;
             ResultSet resultSet;
             PreparedStatement preparedStatement;
-            String selectUser = "SELECT title, content, image FROM news WHERE NewsID = 200";
+            String query = "SELECT title, content, image FROM news WHERE NewsID = 100";
 
             connection = DatabaseConnection.getConnection();
-            preparedStatement = connection.prepareStatement(selectUser);
+            preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             byte[] image = null;
 
             while(resultSet.next()) {
                 JLabel title = new JLabel(resultSet.getString(1));
-                title.setBounds(50, 150, 1000, 40);
+                title.setBounds(50, 120, 1000, 40);
                 title.setFont(new Font("Century Gothic", Font.BOLD, 23));
                 panel.add(title);
-
                 tf.setText(resultSet.getString(2));
 
                 image = resultSet.getBytes("image");
-                Image img = Toolkit.getDefaultToolkit().createImage(image);
-                ImageIcon Icon = new ImageIcon(img);
+                ImageIcon Icon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(image));
                 JLabel lPhoto = new JLabel();
                 lPhoto.setIcon(Icon);
                 Dimension size = lPhoto.getPreferredSize();
-                lPhoto.setBounds(900, 200, size.width, size.height);
+                lPhoto.setBounds(660, 280, size.width, size.height);
                 panel.add(lPhoto);
             }
 

@@ -3,7 +3,6 @@ import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class RegisterAccount {
@@ -30,23 +29,27 @@ public class RegisterAccount {
             preparedStatementEmail.setString(1, email);
             resultSetEmail = preparedStatementEmail.executeQuery();
 
-            if (resultSetUser.next()) {
+            if (resultSetEmail.next()) {
+                optionPaneFont.setText("There already exists an account with this email!");
+                JOptionPane.showMessageDialog(null, optionPaneFont);
+            }
+            else if (Objects.equals(email, "")) {
+                optionPaneFont.setText("Email cannot be empty!");
+                JOptionPane.showMessageDialog(null, optionPaneFont);
+            }
+            else if (resultSetUser.next()) {
                 optionPaneFont.setText("Username is already taken!");
                 JOptionPane.showMessageDialog(null, optionPaneFont);
             }
-            else if (Objects.equals(username, null)) {
+            else if (Objects.equals(username, "")) {
                 optionPaneFont.setText("Username cannot be empty!");
-                JOptionPane.showMessageDialog(null, optionPaneFont);
-            }
-            else if (resultSetEmail.next()) {
-                optionPaneFont.setText("There already exists an account with this email!");
                 JOptionPane.showMessageDialog(null, optionPaneFont);
             }
             else if (!Objects.equals(password, confirmPassword)) {
                 optionPaneFont.setText("Passwords do not match!");
                 JOptionPane.showMessageDialog(null, optionPaneFont);
             }
-            else if (Objects.equals(password, null)) {
+            else if (Objects.equals(password, "")) {
                 optionPaneFont.setText("Password cannot be empty!");
                 JOptionPane.showMessageDialog(null, optionPaneFont);
             }
