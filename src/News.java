@@ -28,8 +28,10 @@ public class News extends JFrame{
 
         JTextArea tf = new JTextArea();
         tf.setBounds(50,200,500,200);
-        tf.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        tf.setFont(new Font("Century Gothic", Font.PLAIN, 21));
         tf.setEditable(false);
+        tf.setWrapStyleWord(true);
+        tf.setLineWrap(true);
         tf.setBorder(null);
         panel.add(tf);
 
@@ -37,7 +39,7 @@ public class News extends JFrame{
             Connection connection;
             ResultSet resultSet;
             PreparedStatement preparedStatement;
-            String selectUser = "SELECT title, content, image FROM news WHERE NewsID = 500";
+            String selectUser = "SELECT title, content, image FROM news WHERE NewsID = 200";
 
             connection = DatabaseConnection.getConnection();
             preparedStatement = connection.prepareStatement(selectUser);
@@ -47,7 +49,7 @@ public class News extends JFrame{
             while(resultSet.next()) {
                 JLabel title = new JLabel(resultSet.getString(1));
                 title.setBounds(50, 150, 1000, 40);
-                title.setFont(new Font("Century Gothic", Font.BOLD, 20));
+                title.setFont(new Font("Century Gothic", Font.BOLD, 23));
                 panel.add(title);
 
                 tf.setText(resultSet.getString(2));
