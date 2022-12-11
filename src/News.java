@@ -29,6 +29,7 @@ public class News extends JFrame{
         JTextArea tf = new JTextArea();
         tf.setBounds(50,200,500,200);
         tf.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+        tf.setEditable(false);
         tf.setBorder(null);
         panel.add(tf);
 
