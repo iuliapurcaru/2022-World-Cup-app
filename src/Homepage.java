@@ -28,8 +28,9 @@ public class Homepage extends JFrame{
         buttons[7].setText("HOME");
 
 
-        JLabel[] news = new JLabel[3];
+        JLabel[] newsTitles = new JLabel[3];
         JButton [] detailsButtons = new JButton[3];
+        String [] news = {"100", "200", "300"};
 
         for(int i = 0; i < 3; i++) {
 
@@ -37,16 +38,17 @@ public class Homepage extends JFrame{
                 Connection connection;
                 ResultSet resultSet;
                 PreparedStatement preparedStatement;
-                String selectUser = "SELECT title FROM news WHERE NewsID = 100";
+                String newsQuery = "SELECT title FROM news WHERE NewsID = ?";
 
                 connection = DatabaseConnection.getConnection();
-                preparedStatement = connection.prepareStatement(selectUser);
+                preparedStatement = connection.prepareStatement(newsQuery);
+                preparedStatement.setString(1, news[i]);
                 resultSet = preparedStatement.executeQuery();
 
                 while(resultSet.next()) {
-                    news[i] = new JLabel(resultSet.getString(1));
-                    news[i].setFont(new Font("Century Gothic", Font.BOLD, 25));
-                    panel.add(news[i]);
+                    newsTitles[i] = new JLabel(resultSet.getString(1));
+                    newsTitles[i].setFont(new Font("Century Gothic", Font.BOLD, 25));
+                    panel.add(newsTitles[i]);
                 }
 
                 connection.close();
@@ -60,19 +62,20 @@ public class Homepage extends JFrame{
             detailsButtons[i].setForeground(Color.WHITE);
             detailsButtons[i].setBackground(Color.getHSBColor(233.74f, 0.97f, 0.401f));
             detailsButtons[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            int iAux = i;
             detailsButtons[i].addActionListener(
                     e -> {
                         this.dispose();
-                        News news2 = new News();
+                        News.getNews(news[iAux]);
                     }
 
             );
             panel.add(detailsButtons[i]);
         }
 
-        news[0].setBounds(50, 188, 1000, 40);
-        news[1].setBounds(50, 383, 1000, 40);
-        news[2].setBounds(50, 578, 1000, 40);
+        newsTitles[0].setBounds(50, 188, 800, 40);
+        newsTitles[1].setBounds(50, 383, 800, 40);
+        newsTitles[2].setBounds(50, 578, 800, 40);
         detailsButtons[0].setBounds(900, 180, 130, 60);
         detailsButtons[1].setBounds(900, 375, 130, 60);
         detailsButtons[2].setBounds(900, 570, 130, 60);

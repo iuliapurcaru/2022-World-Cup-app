@@ -4,24 +4,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class News extends JFrame{
-    News() {
+public class News {
+    public static void getNews(String news) {
 
+        JFrame frame = new JFrame();
         JPanel panel = new JPanel();
         panel.setLayout(null);
         panel.setBackground(Color.getHSBColor(0, 0, 1f));
 
-        this.setTitle("World Cup Qatar 2022");
-        this.setSize(1200, 857);
-        this.setLocationRelativeTo(null);
+        frame.setTitle("World Cup Qatar 2022");
+        frame.setSize(1200, 857);
+        frame.setLocationRelativeTo(null);
         ImageIcon icon = new ImageIcon("img/logo.png");
-        this.setIconImage(icon.getImage());
-        this.setResizable(false);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(panel);
+        frame.setIconImage(icon.getImage());
+        frame.setResizable(false);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(panel);
 
-        JButton[] buttons = Buttons.getButtons(this);
+        JButton[] buttons = Buttons.getButtons(frame);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
@@ -39,10 +40,11 @@ public class News extends JFrame{
             Connection connection;
             ResultSet resultSet;
             PreparedStatement preparedStatement;
-            String query = "SELECT title, content, image FROM news WHERE NewsID = 100";
+            String newsQuery = "SELECT title, content, image FROM news WHERE NewsID = ?";
 
             connection = DatabaseConnection.getConnection();
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(newsQuery);
+            preparedStatement.setString(1, news);
             resultSet = preparedStatement.executeQuery();
             byte[] image = null;
 
@@ -55,11 +57,11 @@ public class News extends JFrame{
 
                 image = resultSet.getBytes("image");
                 ImageIcon Icon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(image));
-                JLabel lPhoto = new JLabel();
-                lPhoto.setIcon(Icon);
-                Dimension size = lPhoto.getPreferredSize();
-                lPhoto.setBounds(660, 280, size.width, size.height);
-                panel.add(lPhoto);
+                JLabel nPhoto = new JLabel();
+                nPhoto.setIcon(Icon);
+                Dimension size = nPhoto.getPreferredSize();
+                nPhoto.setBounds(660, (660 - size.width)/2 + 90, size.width, size.height);
+                panel.add(nPhoto);
             }
 
             connection.close();
