@@ -46,49 +46,49 @@ public class Buttons {
         icon = new ImageIcon("img/buttons/matches.png");
         buttons[3] = new JButton("MATCHES", icon);
         buttons[3].setBounds(473, 720, 236, 90);
-//        buttons[3].addActionListener(
-//                e -> {
-//                    frame.dispose();
-//                    Login login = new Login();
-//                }
-//
-//        );
+        buttons[3].addActionListener(
+                e -> {
+                    frame.dispose();
+                    Matches matches = new Matches();
+                }
+
+        );
 
 
         icon = new ImageIcon("img/buttons/groups.png");
         buttons[4] = new JButton("GROUPS", icon);
         buttons[4].setBounds(709, 720, 237, 90);
-//        buttons[4].addActionListener(
-//                e -> {
-//                    frame.dispose();
-//                    Login login = new Login();
-//                }
-//
-//        );
+        buttons[4].addActionListener(
+                e -> {
+                    frame.dispose();
+                    Groups groups = new Groups();
+                }
+
+        );
 
 
         icon = new ImageIcon("img/buttons/knockout.png");
         buttons[5] = new JButton("KNOCKOUT", icon);
         buttons[5].setBounds(946, 720, 236, 90);
-//        buttons[5].addActionListener(
-//                e -> {
-//                    frame.dispose();
-//                    Login login = new Login();
-//                }
-//
-//        );
+        buttons[5].addActionListener(
+                e -> {
+                    frame.dispose();
+                    Knockout knockout = new Knockout();
+                }
+
+        );
 
 
         icon = new ImageIcon("img/buttons/account.png");
         buttons[6] = new JButton("ACCOUNT", icon);
         buttons[6].setBounds(1065, 0, 119, 90);
-//        accountButton.addActionListener(
-//                e -> {
-//                    frame.dispose();
-//                    Login login = new Login();
-//                }
-//
-//        );
+        buttons[6].addActionListener(
+                e -> {
+                    frame.dispose();
+                    Account account = new Account();
+                }
+
+        );
 
         for(int i = 0; i < 7; i++) {
             buttons[i].setFont(font);
