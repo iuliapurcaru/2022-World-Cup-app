@@ -3,6 +3,7 @@ import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Random;
 
 public class Homepage extends JFrame{
     Homepage() {
@@ -27,42 +28,48 @@ public class Homepage extends JFrame{
         }
         buttons[7].setText("HOME");
 
-        JButton line1 = new JButton();
-        line1.setBounds(0, 307, 1200, 1);
-        line1.setBorderPainted(false);
-        line1.setEnabled(false);
-        line1.setBackground(Color.LIGHT_GRAY);
-        panel.add(line1);
+        JTextArea[] newsTitles = new JTextArea[4];
+        JButton [] detailsButtons = new JButton[4];
+        int [] news = {100, 200, 300, 400, 500, 600};
+        int [] newsHome = new int[4];
 
-        JButton line2 = new JButton();
-        line2.setBounds(0, 502, 1200, 1);
-        line2.setBorderPainted(false);
-        line2.setEnabled(false);
-        line2.setBackground(Color.LIGHT_GRAY);
-        panel.add(line2);
+        for(int i = 0; i < 4; i++) {
+            newsHome[i] = news[new Random().nextInt(news.length)];
+            for(int j = 0; j < i; j++) {
+                if(newsHome[i] == newsHome[j]) {
+                    i--;
+                    j = 4;
+                }
+            }
+        }
 
+        byte[] image = null;
 
-        JLabel[] newsTitles = new JLabel[3];
-        JButton [] detailsButtons = new JButton[3];
-        String [] news = {"100", "200", "300"};
-
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < 4; i++) {
 
             try {
                 Connection connection;
                 ResultSet resultSet;
                 PreparedStatement preparedStatement;
-                String newsQuery = "SELECT title FROM news WHERE NewsID = ?";
+                String newsQuery = "SELECT title, image FROM news WHERE NewsID = ?";
 
                 connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement(newsQuery);
-                preparedStatement.setString(1, news[i]);
+                preparedStatement.setInt(1, newsHome[i]);
                 resultSet = preparedStatement.executeQuery();
 
                 while(resultSet.next()) {
-                    newsTitles[i] = new JLabel(resultSet.getString(1));
-                    newsTitles[i].setFont(new Font("Century Gothic", Font.BOLD, 25));
+                    newsTitles[i] = new JTextArea(resultSet.getString("title"));
+                    newsTitles[i].setFont(new Font("Century Gothic", Font.BOLD, 20));
+                    newsTitles[i].setEditable(false);
+                    newsTitles[i].setWrapStyleWord(true);
+                    newsTitles[i].setLineWrap(true);
+                    newsTitles[i].setBorder(null);
                     panel.add(newsTitles[i]);
+                    
+                    image = resultSet.getBytes("image");
+                    icon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(image));
+                    detailsButtons[i] = new JButton(icon);
                 }
 
                 connection.close();
@@ -71,28 +78,27 @@ public class Homepage extends JFrame{
                 System.out.println(e);
             }
 
-            detailsButtons[i] = new JButton("DETAILS");
-            detailsButtons[i].setFont(new Font("Century Gothic", Font.PLAIN, 18));
-            detailsButtons[i].setForeground(Color.WHITE);
-            detailsButtons[i].setBackground(Color.getHSBColor(233.74f, 0.97f, 0.401f));
             detailsButtons[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             int iAux = i;
             detailsButtons[i].addActionListener(
                     e -> {
                         this.dispose();
-                        News.getNews(news[iAux]);
+                        News.getNews(newsHome[iAux]);
                     }
 
             );
             panel.add(detailsButtons[i]);
         }
 
-        newsTitles[0].setBounds(50, 188, 800, 40);
-        newsTitles[1].setBounds(50, 383, 800, 40);
-        newsTitles[2].setBounds(50, 578, 800, 40);
-        detailsButtons[0].setBounds(900, 180, 130, 60);
-        detailsButtons[1].setBounds(900, 375, 130, 60);
-        detailsButtons[2].setBounds(900, 570, 130, 60);
+        newsTitles[0].setBounds(80, 347, 451, 60);
+        newsTitles[1].setBounds(650, 347, 451, 60);
+        newsTitles[2].setBounds(80, 647, 451, 60);
+        newsTitles[3].setBounds(650, 647, 451, 60);
+
+        detailsButtons[0].setBounds(80, 120, 451, 225);
+        detailsButtons[1].setBounds(650, 120, 451, 225);
+        detailsButtons[2].setBounds(80, 420, 451, 225);
+        detailsButtons[3].setBounds(650, 420, 451, 225);
 
     }
 

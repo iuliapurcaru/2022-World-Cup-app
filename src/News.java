@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class News {
-    public static void getNews(String news) {
+    public static void getNews(int news) {
 
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
@@ -28,7 +28,7 @@ public class News {
         }
 
         JTextArea tf = new JTextArea();
-        tf.setBounds(50,170,550,700);
+        tf.setBounds(50,170,560,700);
         tf.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         tf.setEditable(false);
         tf.setWrapStyleWord(true);
@@ -44,7 +44,7 @@ public class News {
 
             connection = DatabaseConnection.getConnection();
             preparedStatement = connection.prepareStatement(newsQuery);
-            preparedStatement.setString(1, news);
+            preparedStatement.setInt(1, news);
             resultSet = preparedStatement.executeQuery();
             byte[] image = null;
 
