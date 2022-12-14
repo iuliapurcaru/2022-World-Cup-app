@@ -27,14 +27,14 @@ public class News {
             panel.add(buttons[i]);
         }
 
-        JTextArea tf = new JTextArea();
-        tf.setBounds(50,170,560,700);
-        tf.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-        tf.setEditable(false);
-        tf.setWrapStyleWord(true);
-        tf.setLineWrap(true);
-        tf.setBorder(null);
-        panel.add(tf);
+        JTextArea contentArea = new JTextArea();
+        contentArea.setBounds(50,170,560,700);
+        contentArea.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+        contentArea.setEditable(false);
+        contentArea.setWrapStyleWord(true);
+        contentArea.setLineWrap(true);
+        contentArea.setBorder(null);
+        panel.add(contentArea);
 
         try {
             Connection connection;
@@ -53,7 +53,7 @@ public class News {
                 title.setBounds(50, 120, 1000, 40);
                 title.setFont(new Font("Century Gothic", Font.BOLD, 23));
                 panel.add(title);
-                tf.setText(resultSet.getString(2));
+                contentArea.setText(resultSet.getString(2));
 
                 image = resultSet.getBytes("image");
                 ImageIcon Icon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(image));

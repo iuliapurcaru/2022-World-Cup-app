@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Teams extends JFrame {
     Teams() {
@@ -23,6 +27,36 @@ public class Teams extends JFrame {
             panel.add(buttons[i]);
         }
         buttons[7].setText("TEAMS");
+
+        JTextArea tf = new JTextArea();
+        tf.setBounds(50,170,1000,700);
+        tf.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        tf.setEditable(false);
+        tf.setWrapStyleWord(true);
+        tf.setLineWrap(true);
+        tf.setBorder(null);
+        panel.add(tf);
+
+        try {
+            Connection connection;
+            ResultSet resultSet;
+            Statement statement;
+            String teamsQuery = "SELECT denumire FROM teams ORDER BY denumire";
+
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(teamsQuery);
+
+            while(resultSet.next()) {
+                tf.setText(tf.getText().concat(
+                        resultSet.getString(1) + "\t\t"));
+            }
+
+            connection.close();
+        }
+        catch (Exception r){
+            System.out.println(r);
+        }
 
     }
 
