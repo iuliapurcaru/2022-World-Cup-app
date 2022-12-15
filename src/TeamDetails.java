@@ -9,6 +9,7 @@ import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 public class TeamDetails {
 
     public static void getTeam(String teamID) {
+
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);

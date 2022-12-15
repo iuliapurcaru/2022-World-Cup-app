@@ -4,6 +4,7 @@ import java.awt.*;
 public class Knockout {
 
     public static void getKnockout() {
+
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);

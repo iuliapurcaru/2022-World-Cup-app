@@ -4,6 +4,7 @@ import java.awt.*;
 public class Account {
 
     public static void getAccount() {
+
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);
