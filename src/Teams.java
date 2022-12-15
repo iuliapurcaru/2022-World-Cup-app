@@ -28,19 +28,12 @@ public class Teams extends JFrame {
         }
         buttons[7].setText("TEAMS");
 
-//        JTextArea tf = new JTextArea();
-//        tf.setBounds(50,170,1000,700);
-//        tf.setFont(new Font("Century Gothic", Font.BOLD, 20));
-//        tf.setEditable(false);
-//        tf.setWrapStyleWord(true);
-//        tf.setLineWrap(true);
-//        tf.setBorder(null);
-//        panel.add(tf);
-
         int size = 0;
         int align = 0;
         int count = 0;
+        String[] teamsID = new String[32];
         JLabel[] teams = new JLabel[32];
+        JButton[] teamButtons = new JButton[32];
         JLabel nPhoto = new JLabel();
         String arg = "ARG";
 
@@ -48,7 +41,7 @@ public class Teams extends JFrame {
             Connection connection;
             ResultSet resultSet;
             Statement statement;
-            String teamsQuery = "SELECT denumire FROM teams ORDER BY denumire";
+            String teamsQuery = "SELECT taraID, denumire, flag FROM teams ORDER BY denumire";
 
             connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
@@ -57,34 +50,25 @@ public class Teams extends JFrame {
             byte[] image = null;
 
             while(resultSet.next()) {
-                teams[size] = new JLabel(resultSet.getString(1));
+                teamsID[size] = new String(resultSet.getString("taraID"));
+                teams[size] = new JLabel(resultSet.getString("denumire"));
+                image = resultSet.getBytes("flag");
+                icon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(image));
+                teamButtons[size] = new JButton(icon);
+                teamButtons[size].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 size++;
 
             }
 
-            String Query = "SELECT flag FROM teams WHERE TaraID = 'ARG'";
+            for(int i = 0; i < size; i++) {
+                int iAux = i;
+                teamButtons[i].addActionListener(
+                        e -> {
+                            this.dispose();
+                            TeamDetails.getTeam(teamsID[iAux]);
+                        }
 
-            connection = DatabaseConnection.getConnection();
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(Query);
-
-            while(resultSet.next()) {
-
-                image = resultSet.getBytes("flag");
-                icon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(image));
-                JButton button = new JButton(icon);
-                button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                button.setBounds(30, 115, 94, 62);
-                panel.add(button);
-
-
-
-//                image = resultSet.getBytes("flag");
-//                ImageIcon Icon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(image));
-//                nPhoto.setIcon(Icon);
-//                Dimension size2 = nPhoto.getPreferredSize();
-//                nPhoto.setBounds(30, 115, size2.width, size2.height);
-//                panel.add(button);
+                );
             }
 
             connection.close();
@@ -97,6 +81,8 @@ public class Teams extends JFrame {
 
             for(int j = 0; (j < 7) && (count < 32) ; j++) {
 
+                teamButtons[count].setBounds(30 + j * 170, 120 + align, 94, 62);
+                panel.add(teamButtons[count]);
                 teams[count].setBounds(30 + j * 170, 180 + align, 130, 40);
                 teams[count].setFont(new Font("Century Gothic", Font.BOLD, 18));
                 panel.add(teams[count]);
