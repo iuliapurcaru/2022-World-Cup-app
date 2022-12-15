@@ -37,7 +37,7 @@ public class Homepage extends JFrame {
             }
         }
 
-        byte[] image = null;
+        byte[] image;
 
         for(int i = 0; i < 4; i++) {
 
@@ -69,7 +69,7 @@ public class Homepage extends JFrame {
                 connection.close();
             }
             catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
 
             detailsButtons[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

@@ -16,8 +16,6 @@ public class TeamDetails {
         panel.setBackground(Color.WHITE);
         frame.add(panel);
 
-        ImageIcon icon;
-
         JButton[] buttons = Buttons.getButtons(frame);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
@@ -33,7 +31,6 @@ public class TeamDetails {
             preparedStatement = connection.prepareStatement(newsQuery);
             preparedStatement.setString(1, teamID);
             resultSet = preparedStatement.executeQuery();
-            byte[] image = null;
 
             while(resultSet.next()) {
                 buttons[7].setText(toUpperCase(resultSet.getString("denumire")));
@@ -41,8 +38,9 @@ public class TeamDetails {
 
             connection.close();
         }
-        catch (Exception r){
-            System.out.println(r);
+        catch (Exception e){
+            e.printStackTrace();
+
         }
 
 

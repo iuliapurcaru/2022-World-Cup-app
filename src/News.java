@@ -38,7 +38,7 @@ public class News {
             preparedStatement = connection.prepareStatement(newsQuery);
             preparedStatement.setInt(1, news);
             resultSet = preparedStatement.executeQuery();
-            byte[] image = null;
+            byte[] image;
 
             while(resultSet.next()) {
                 JLabel title = new JLabel(resultSet.getString(1));
@@ -58,8 +58,8 @@ public class News {
 
             connection.close();
         }
-        catch (Exception r){
-            System.out.println(r);
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

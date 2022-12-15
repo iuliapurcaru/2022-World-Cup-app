@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -39,10 +38,10 @@ public class Teams {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(teamsQuery);
 
-            byte[] image = null;
+            byte[] image;
 
             while(resultSet.next()) {
-                teamsID[size] = new String(resultSet.getString("taraID"));
+                teamsID[size] = resultSet.getString("taraID");
                 teams[size] = new JLabel(resultSet.getString("denumire"));
                 image = resultSet.getBytes("flag");
                 icon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(image));
@@ -66,7 +65,7 @@ public class Teams {
             connection.close();
         }
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         for(int i = 0; i < 5; i++) {

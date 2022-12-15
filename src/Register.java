@@ -78,14 +78,11 @@ public class Register {
         registerButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.addActionListener(
-                e -> {
-
-                    RegisterAccount.registerAccount(usernameField.getText(),
-                                                    emailField.getText(),
-                                                    passwordField.getText(),
-                                                    confirmPasswordField.getText(),
-                                              frame);
-                }
+                e -> RegisterAccount.registerAccount(usernameField.getText(),
+                                                emailField.getText(),
+                                                passwordField.getText(),
+                                                confirmPasswordField.getText(),
+                                                frame)
 
         );
         panel.add(registerButton);
