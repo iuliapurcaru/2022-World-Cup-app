@@ -38,7 +38,7 @@ public class Buttons {
         buttons[2].addActionListener(
                 e -> {
                     frame.dispose();
-                    Teams teams = new Teams();
+                    Teams.getTeams();
                 }
 
         );
@@ -49,7 +49,7 @@ public class Buttons {
         buttons[3].addActionListener(
                 e -> {
                     frame.dispose();
-                    Matches matches = new Matches();
+                    Matches.getMatches();
                 }
 
         );
@@ -61,7 +61,7 @@ public class Buttons {
         buttons[4].addActionListener(
                 e -> {
                     frame.dispose();
-                    Groups groups = new Groups();
+                    Groups.getGroups();
                 }
 
         );
@@ -73,7 +73,7 @@ public class Buttons {
         buttons[5].addActionListener(
                 e -> {
                     frame.dispose();
-                    Knockout knockout = new Knockout();
+                    Knockout.getKnockout();
                 }
 
         );
@@ -85,7 +85,7 @@ public class Buttons {
         buttons[6].addActionListener(
                 e -> {
                     frame.dispose();
-                    Account account = new Account();
+                    Account.getAccount();
                 }
 
         );

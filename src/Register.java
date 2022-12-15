@@ -8,14 +8,6 @@ public class Register {
         panel.setLayout(null);
         frame.add(panel);
 
-//        frame.setTitle("World Cup Qatar 2022");
-//        frame.setSize(1200, 857);
-//        frame.setLocationRelativeTo(null);
-//        ImageIcon img = new ImageIcon("img/logo.png");
-//        frame.setIconImage(img.getImage());
-//        frame.setResizable(false);
-//        frame.setVisible(true);
-
         JLabel background = new JLabel();
         background.setIcon(new ImageIcon("img/background.png"));
         Dimension size = background.getPreferredSize();

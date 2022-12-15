@@ -74,10 +74,9 @@ public class Homepage extends JFrame {
 
             detailsButtons[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             int iAux = i;
-            JFrame finalFrame = frame;
             detailsButtons[i].addActionListener(
                     e -> {
-                        finalFrame.dispose();
+                        frame.dispose();
                         News.getNews(newsHome[iAux]);
                     }
 

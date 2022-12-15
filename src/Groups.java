@@ -1,28 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Groups extends JFrame {
+public class Groups {
 
-    Groups() {
+    public static void getGroups() {
         JPanel panel = new JPanel();
+        JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);
         panel.setBackground(Color.WHITE);
 
-        this.setTitle("World Cup Qatar 2022");
-        this.setSize(1200, 857);
-        this.setLocationRelativeTo(null);
-        ImageIcon icon = new ImageIcon("img/logo.png");
-        this.setIconImage(icon.getImage());
-        this.setResizable(false);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(panel);
+        frame.add(panel);
 
-        JButton[] buttons = Buttons.getButtons(this);
+        JButton[] buttons = Buttons.getButtons(frame);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
         buttons[7].setText("GROUPS");
+
     }
 
 }

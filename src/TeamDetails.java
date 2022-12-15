@@ -9,20 +9,13 @@ import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 public class TeamDetails {
 
     public static void getTeam(String teamID) {
-        JFrame frame = new JFrame();
         JPanel panel = new JPanel();
+        JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);
         panel.setBackground(Color.WHITE);
-
-        frame.setTitle("World Cup Qatar 2022");
-        frame.setSize(1200, 857);
-        frame.setLocationRelativeTo(null);
-        ImageIcon icon = new ImageIcon("img/logo.png");
-        frame.setIconImage(icon.getImage());
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
+
+        ImageIcon icon;
 
         JButton[] buttons = Buttons.getButtons(frame);
         for (int i = 0; i < 8; i++) {

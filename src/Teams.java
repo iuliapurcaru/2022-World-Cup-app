@@ -5,24 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class Teams extends JFrame {
-    Teams() {
+public class Teams {
+    public static void getTeams() {
 
         JPanel panel = new JPanel();
+        JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);
         panel.setBackground(Color.WHITE);
 
-        this.setTitle("World Cup Qatar 2022");
-        this.setSize(1200, 857);
-        this.setLocationRelativeTo(null);
-        ImageIcon icon = new ImageIcon("img/logo.png");
-        this.setIconImage(icon.getImage());
-        this.setResizable(false);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(panel);
+        frame.add(panel);
 
-        JButton[] buttons = Buttons.getButtons(this);
+        JButton[] buttons = Buttons.getButtons(frame);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
@@ -34,8 +27,7 @@ public class Teams extends JFrame {
         String[] teamsID = new String[32];
         JLabel[] teams = new JLabel[32];
         JButton[] teamButtons = new JButton[32];
-        JLabel nPhoto = new JLabel();
-        String arg = "ARG";
+        ImageIcon icon;
 
         try {
             Connection connection;
@@ -64,7 +56,7 @@ public class Teams extends JFrame {
                 int iAux = i;
                 teamButtons[i].addActionListener(
                         e -> {
-                            this.dispose();
+                            frame.dispose();
                             TeamDetails.getTeam(teamsID[iAux]);
                         }
 
