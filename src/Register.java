@@ -1,18 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Register extends JFrame {
-    Register() {
+public class Register {
+    public static void getRegister() {
         JPanel panel = new JPanel();
+        JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);
+        frame.add(panel);
 
-        this.setTitle("World Cup Qatar 2022");
-        this.setSize(1200, 857);
-        this.setLocationRelativeTo(null);
-        ImageIcon img = new ImageIcon("img/logo.png");
-        this.setIconImage(img.getImage());
-        this.setResizable(false);
-        this.setVisible(true);
+//        frame.setTitle("World Cup Qatar 2022");
+//        frame.setSize(1200, 857);
+//        frame.setLocationRelativeTo(null);
+//        ImageIcon img = new ImageIcon("img/logo.png");
+//        frame.setIconImage(img.getImage());
+//        frame.setResizable(false);
+//        frame.setVisible(true);
 
         JLabel background = new JLabel();
         background.setIcon(new ImageIcon("img/background.png"));
@@ -90,7 +92,7 @@ public class Register extends JFrame {
                                                     emailField.getText(),
                                                     passwordField.getText(),
                                                     confirmPasswordField.getText(),
-                                              this);
+                                              frame);
                 }
 
         );
@@ -111,14 +113,14 @@ public class Register extends JFrame {
         signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         signInButton.addActionListener(
                 e -> {
-                    this.dispose();
-                    Login login = new Login();
+                    frame.dispose();
+                    Login.getLogin();
                 }
 
         );
         panel.add(signInButton);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(panel);
     }
 }

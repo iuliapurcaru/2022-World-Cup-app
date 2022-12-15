@@ -54,7 +54,7 @@ public class RegisterAccount {
                 JOptionPane.showMessageDialog(null, optionPaneFont);
             }
             else {
-                String insertUser = "INSERT INTO users (`Username`, `Email`, `Password`, `FavouriteCountryID`) values (?, ?, ?, NULL)";
+                String insertUser = "INSERT INTO users (`Username`, `Email`, `Password`) values (?, ?, ?)";
                 PreparedStatement preparedStatement;
                 preparedStatement = connection.prepareStatement(insertUser);
                 preparedStatement.setString(1, username);
@@ -62,7 +62,7 @@ public class RegisterAccount {
                 preparedStatement.setString(3, password);
                 preparedStatement.executeUpdate();
                 frame.dispose();
-                Login login = new Login();
+                Login.getLogin();
             }
 
             connection.close();

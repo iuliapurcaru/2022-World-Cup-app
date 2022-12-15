@@ -3,18 +3,19 @@ import javax.swing.*;
 
 public class Login extends JFrame {
 
-    public Login() {
+    public static void getLogin() {
         JPanel panel = new JPanel();
+        JFrame frame = new JFrame();
         panel.setLayout(null);
 
-        this.setTitle("World Cup Qatar 2022");
-        this.setSize(1200, 857);
-        this.setLocationRelativeTo(null);
+        frame.setTitle("World Cup Qatar 2022");
+        frame.setSize(1200, 857);
+        frame.setLocationRelativeTo(null);
         ImageIcon icon = new ImageIcon("img/logo.png");
-        this.setIconImage(icon.getImage());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.add(panel);
+        frame.setIconImage(icon.getImage());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.add(panel);
 
         JLabel background = new JLabel();
         background.setIcon(new ImageIcon("img/background.png"));
@@ -62,7 +63,7 @@ public class Login extends JFrame {
         signInButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         signInButton.addActionListener(
-                e -> LoginCheck.loginCheck(usernameField.getText(), passwordField.getText(), this)
+                e -> LoginCheck.loginCheck(usernameField.getText(), passwordField.getText(), frame)
 
         );
         panel.add(signInButton);
@@ -82,8 +83,8 @@ public class Login extends JFrame {
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.addActionListener(
                 e -> {
-                    this.dispose();
-                    Register register = new Register();
+                    frame.dispose();
+                    Register.getRegister();
                 }
 
         );
@@ -95,14 +96,14 @@ public class Login extends JFrame {
         guestButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         guestButton.addActionListener(
                 e -> {
-                    this.dispose();
-                    Homepage homepage = new Homepage();
+                    frame.dispose();
+                    Homepage.getHomepage();
                 }
 
         );
         panel.add(guestButton);
 
-        this.setVisible(true);
+        frame.setVisible(true);
     }
 
 }

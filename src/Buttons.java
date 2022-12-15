@@ -15,7 +15,7 @@ public class Buttons {
         buttons[0].addActionListener(
                 e -> {
                     frame.dispose();
-                    Login login = new Login();
+                    Login.getLogin();
                 }
 
         );
@@ -27,7 +27,7 @@ public class Buttons {
         buttons[1].addActionListener(
                 e -> {
                     frame.dispose();
-                    Homepage homepage = new Homepage();
+                    Homepage.getHomepage();
                 }
         );
 

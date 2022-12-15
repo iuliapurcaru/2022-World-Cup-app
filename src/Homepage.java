@@ -5,24 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Random;
 
-public class Homepage extends JFrame{
-    Homepage() {
+public class Homepage extends JFrame {
+    public static void getHomepage() {
 
         JPanel panel = new JPanel();
+        JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);
         panel.setBackground(Color.WHITE);
+        frame.add(panel);
 
-        this.setTitle("World Cup Qatar 2022");
-        this.setSize(1200, 857);
-        this.setLocationRelativeTo(null);
-        ImageIcon icon = new ImageIcon("img/logo.png");
-        this.setIconImage(icon.getImage());
-        this.setResizable(false);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(panel);
+        ImageIcon icon;
 
-        JButton[] buttons = Buttons.getButtons(this);
+        JButton[] buttons = Buttons.getButtons(frame);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
@@ -80,9 +74,10 @@ public class Homepage extends JFrame{
 
             detailsButtons[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             int iAux = i;
+            JFrame finalFrame = frame;
             detailsButtons[i].addActionListener(
                     e -> {
-                        this.dispose();
+                        finalFrame.dispose();
                         News.getNews(newsHome[iAux]);
                     }
 
