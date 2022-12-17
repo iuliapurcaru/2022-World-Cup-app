@@ -1,3 +1,9 @@
+package pages;
+
+import awt.BuildFrame;
+import awt.Buttons;
+import database.DatabaseConnection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
@@ -39,6 +45,7 @@ public class News {
             preparedStatement.setInt(1, news);
             resultSet = preparedStatement.executeQuery();
             byte[] image;
+            JLabel nPhoto;
 
             while(resultSet.next()) {
                 JLabel title = new JLabel(resultSet.getString(1));
@@ -49,7 +56,7 @@ public class News {
 
                 image = resultSet.getBytes("image");
                 ImageIcon Icon = new ImageIcon(Toolkit.getDefaultToolkit().createImage(image));
-                JLabel nPhoto = new JLabel();
+                nPhoto = new JLabel();
                 nPhoto.setIcon(Icon);
                 Dimension size = nPhoto.getPreferredSize();
                 nPhoto.setBounds(660, (660 - size.width)/2 + 90, size.width, size.height);

@@ -1,3 +1,8 @@
+package pages;
+
+import awt.BuildFrame;
+import awt.Buttons;
+
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,9 +1,14 @@
+package pages;
+
+import awt.BuildFrame;
+import awt.Buttons;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Account {
+public class Knockout {
 
-    public static void getAccount() {
+    public static void getKnockout() {
 
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
@@ -16,7 +21,7 @@ public class Account {
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
-        buttons[7].setText("MY ACCOUNT");
+        buttons[7].setText("KNOCKOUT");
 
     }
 

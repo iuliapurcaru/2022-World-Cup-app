@@ -1,3 +1,5 @@
+package awt;
+
 import javax.swing.*;
 
 public class BuildFrame extends JFrame {

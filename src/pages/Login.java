@@ -1,3 +1,7 @@
+package pages;
+
+import database.LoginCheck;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -55,8 +59,7 @@ public class Login extends JFrame {
         passwordField.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         panel.add(passwordField);
 
-        JButton signInButton;
-        signInButton = new JButton("SIGN IN");
+        JButton signInButton = new JButton("SIGN IN");
         signInButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
         signInButton.setBounds(791,470, 130,40);
         signInButton.setForeground(Color.WHITE);
@@ -74,8 +77,7 @@ public class Login extends JFrame {
         noAccount.setForeground(Color.WHITE);
         panel.add(noAccount);
 
-        JButton registerButton;
-        registerButton = new JButton("REGISTER");
+        JButton registerButton = new JButton("REGISTER");
         registerButton.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         registerButton.setBounds(791,588, 130,40);
         registerButton.setForeground(Color.WHITE);

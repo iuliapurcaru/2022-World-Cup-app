@@ -1,3 +1,9 @@
+package pages;
+
+import awt.BuildFrame;
+import database.RegisterAccount;
+import pages.Login;
+
 import javax.swing.*;
 import java.awt.*;
 

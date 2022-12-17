@@ -1,3 +1,9 @@
+package pages;
+
+import awt.BuildFrame;
+import awt.Buttons;
+import database.DatabaseConnection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;

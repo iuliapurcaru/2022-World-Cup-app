@@ -1,8 +1,11 @@
+package teampages;
+
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+
+import awt.*;
+import database.DatabaseConnection;
 
 public class Teams {
     public static void getTeams() {

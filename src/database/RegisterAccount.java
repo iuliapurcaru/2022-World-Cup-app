@@ -1,3 +1,8 @@
+package database;
+
+import database.DatabaseConnection;
+import pages.Login;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;

@@ -1,9 +1,15 @@
+package pages;
+
+import awt.BuildFrame;
+import awt.Buttons;
+
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Matches {
+public class Account {
 
-    public static void getMatches() {
+    public static void getAccount() {
 
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
@@ -16,7 +22,7 @@ public class Matches {
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
-        buttons[7].setText("MATCHES");
+        buttons[7].setText("MY ACCOUNT");
 
     }
 
