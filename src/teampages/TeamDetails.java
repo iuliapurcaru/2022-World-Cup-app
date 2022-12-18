@@ -90,28 +90,43 @@ public class TeamDetails {
         playersButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         playersButton.addActionListener(
                 e -> {
-                    textArea.setText("\t" + "Name\t\tNumber\tPosition\tDate of Birth\tHeight\n" +
-                            "\t" + "------------------------------------------------------------" +
-                            "------------------------------------------------------------\n");
+                    textArea.setText("Name\t\tNumber\tPosition\tDate of Birth\tHeight\tGoals scored\n" +
+                            "--------------------------------------------------------------------------" +
+                            "--------------------------------------------------------------------------\n");
                     try {
                         Connection connection;
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String Query = "SELECT * FROM players WHERE TaraID = ? ORDER BY positionID, numar";
+                        String Query = "SELECT P.prenume, P.nume, P.numar, P.pozitie, P.datanasterii, P.inaltime, (SELECT COUNT(G.JucatorID)\n" +
+                                "                                                                FROM goals G\n" +
+                                "                                                                WHERE G.jucatorID = P.jucatorID AND tip IN ('(A)', '(P)'))\n" +
+                                "FROM players P\n" +
+                                "WHERE P.TaraID = ?\n" +
+                                "ORDER BY P.positionID, P.numar";
 
                         connection = DatabaseConnection.getConnection();
                         preparedStatement = connection.prepareStatement(Query);
                         preparedStatement.setString(1, teamID);
                         resultSet = preparedStatement.executeQuery();
 
+                        String tab;
+
                         while(resultSet.next()) {
+                            if (resultSet.getString(1).length() + resultSet.getString(2).length() < 16) {
+                                tab = "\t\t";
+                            }
+                            else {
+                                tab = "\t";
+                            }
+
                             textArea.setText(textArea.getText().concat(
-                                    "\t" + resultSet.getString(3) +
-                                            resultSet.getString(2) + "\t\t" +
+                                    resultSet.getString(1) +
+                                            resultSet.getString(2) + tab +
+                                            resultSet.getString(3) + "\t" +
+                                            resultSet.getString(4) + "\t" +
                                             resultSet.getString(5) + "\t" +
-                                            resultSet.getString(6) + "\t" +
-                                            resultSet.getString(7) + "\t" +
-                                            resultSet.getString(8) + " m\n"));
+                                            resultSet.getString(6) + " m\t" +
+                                            resultSet.getString(7) + "\n"));
                         }
 
                         connection.close();
