@@ -6,9 +6,9 @@ import awt.Buttons;
 import javax.swing.*;
 import java.awt.*;
 
-public class Knockout {
+public class Stats {
 
-    public static void getKnockout() {
+    public static void getStats() {
 
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
@@ -21,7 +21,7 @@ public class Knockout {
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
-        buttons[7].setText("KNOCKOUT");
+        buttons[7].setText("STATS");
 
     }
 

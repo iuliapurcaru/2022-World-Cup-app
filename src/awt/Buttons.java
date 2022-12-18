@@ -72,13 +72,13 @@ public class Buttons {
         );
 
 
-        icon = new ImageIcon("img/buttons/knockout.png");
+        icon = new ImageIcon("img/buttons/stats.png");
         buttons[5] = new JButton("STATS", icon);
         buttons[5].setBounds(946, 720, 236, 90);
         buttons[5].addActionListener(
                 e -> {
                     frame.dispose();
-                    Knockout.getKnockout();
+                    Stats.getStats();
                 }
 
         );
