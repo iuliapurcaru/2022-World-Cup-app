@@ -1,6 +1,7 @@
 package pages;
 
 import database.LoginCheck;
+import teampages.Teams;
 
 import java.awt.*;
 import javax.swing.*;
@@ -99,7 +100,7 @@ public class Login extends JFrame {
         guestButton.addActionListener(
                 e -> {
                     frame.dispose();
-                    Homepage.getHomepage();
+                    Teams.getTeams();
                 }
 
         );

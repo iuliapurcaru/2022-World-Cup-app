@@ -90,23 +90,23 @@ public class TeamDetails {
         playersButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         playersButton.addActionListener(
                 e -> {
-                    textArea.setText("Name\t\tNumber\tPosition\tDate of Birth\tHeight\n" +
-                            "------------------------------------------------------------" +
+                    textArea.setText("\t" + "Name\t\tNumber\tPosition\tDate of Birth\tHeight\n" +
+                            "\t" + "------------------------------------------------------------" +
                             "------------------------------------------------------------\n");
                     try {
                         Connection connection;
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String newsQuery = "SELECT * FROM players WHERE TaraID = ? ORDER BY numar";
+                        String Query = "SELECT * FROM players WHERE TaraID = ? ORDER BY positionID, numar";
 
                         connection = DatabaseConnection.getConnection();
-                        preparedStatement = connection.prepareStatement(newsQuery);
+                        preparedStatement = connection.prepareStatement(Query);
                         preparedStatement.setString(1, teamID);
                         resultSet = preparedStatement.executeQuery();
 
                         while(resultSet.next()) {
                             textArea.setText(textArea.getText().concat(
-                                    resultSet.getString(3) +
+                                    "\t" + resultSet.getString(3) +
                                             resultSet.getString(2) + "\t\t" +
                                             resultSet.getString(5) + "\t" +
                                             resultSet.getString(6) + "\t" +
@@ -118,7 +118,6 @@ public class TeamDetails {
                     }
                     catch (Exception err){
                         err.printStackTrace();
-
                     }
                 }
 
@@ -133,7 +132,35 @@ public class TeamDetails {
         matchesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         matchesButton.addActionListener(
                 e -> {
-                    textArea.setText("Matches");
+                    textArea.setText("");
+                    try {
+                        Connection connection;
+                        ResultSet resultSet;
+                        PreparedStatement preparedStatement;
+                        String Query = "SELECT A.Denumire, M.scor, B.Denumire " +
+                                "FROM matches M, teams A, teams B " +
+                                "WHERE (M.Tara1ID = ? OR M.Tara2ID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) " +
+                                "ORDER BY data";
+
+                        connection = DatabaseConnection.getConnection();
+                        preparedStatement = connection.prepareStatement(Query);
+                        preparedStatement.setString(1, teamID);
+                        preparedStatement.setString(2, teamID);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while(resultSet.next()) {
+                            textArea.setText(textArea.getText().concat(
+                                    resultSet.getString(1) + "\t" +
+                                            resultSet.getString(2) + "        " +
+                                            resultSet.getString(3) + "\n"));
+                        }
+
+                        connection.close();
+                    }
+                    catch (Exception err){
+                        err.printStackTrace();
+
+                    }
                 }
         );
         panel.add(matchesButton);
