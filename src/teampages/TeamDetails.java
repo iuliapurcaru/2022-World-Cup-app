@@ -77,7 +77,41 @@ public class TeamDetails {
         statsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         statsButton.addActionListener(
                 e -> {
-                    textArea.setText("Stats");
+                    textArea.setText("");
+                    try {
+                        Connection connection;
+                        ResultSet resultSet;
+                        PreparedStatement preparedStatement;
+                        String Query = "SELECT DISTINCT T.confederatie, T.antrenor, P.prenume, P.nume\n" +
+                                "FROM matches M, teams T, players P\n" +
+                                "WHERE (T.taraID = ?) AND (T.capitanID = P.jucatorID)";
+
+                        connection = DatabaseConnection.getConnection();
+                        preparedStatement = connection.prepareStatement(Query);
+                        preparedStatement.setString(1, teamID);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while(resultSet.next()) {
+                            textArea.setText(textArea.getText().concat(
+                                    "Confederation: " + resultSet.getString(1) + "\n" +
+                                            "Head coach: " + resultSet.getString(2) + "\n" +
+                                            "Captain: " + resultSet.getString(3) +
+                                            resultSet.getString(4) + "\n\n" +
+                                            "Matches played: " + "\n" +
+                                            "Goals scored: " + "\n" +
+                                            "Own goals: " + "\n" +
+                                            "Penalties scored: " + "\n" +
+                                            "Top scorer: " + "\n" +
+                                            "Yellow cards: " + "\n" +
+                                            "Red cards: "));
+                        }
+
+                        connection.close();
+                    }
+                    catch (Exception err){
+                        err.printStackTrace();
+
+                    }
                 }
         );
         panel.add(statsButton);
