@@ -30,7 +30,7 @@ public class LoginCheck {
 
                 if (resultSet.next() && Objects.equals(resultSet.getString(1), password)) {
                     frame.dispose();
-                    Homepage.getHomepage();
+                    Homepage.getHomepage(username);
                 }
                 else {
                     JLabel label = new JLabel("Incorrect username or password!");

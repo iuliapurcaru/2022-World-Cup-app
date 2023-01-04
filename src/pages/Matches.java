@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Matches {
 
-    public static void getMatches() {
+    public static void getMatches(String username) {
 
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
@@ -17,7 +17,7 @@ public class Matches {
 
         frame.add(panel);
 
-        JButton[] buttons = Buttons.getButtons(frame);
+        JButton[] buttons = Buttons.getButtons(frame, username);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }

@@ -100,7 +100,7 @@ public class Login extends JFrame {
         guestButton.addActionListener(
                 e -> {
                     frame.dispose();
-                    Teams.getTeams();
+                    Teams.getTeams("test");
                 }
 
         );

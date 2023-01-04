@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Groups {
 
-    public static void getGroups() {
+    public static void getGroups(String username) {
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);
@@ -17,7 +17,7 @@ public class Groups {
 
         frame.add(panel);
 
-        JButton[] buttons = Buttons.getButtons(frame);
+        JButton[] buttons = Buttons.getButtons(frame, username);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }

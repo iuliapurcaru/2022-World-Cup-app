@@ -8,7 +8,7 @@ import awt.*;
 import database.DatabaseConnection;
 
 public class Teams {
-    public static void getTeams() {
+    public static void getTeams(String username) {
 
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
@@ -17,7 +17,7 @@ public class Teams {
 
         frame.add(panel);
 
-        JButton[] buttons = Buttons.getButtons(frame);
+        JButton[] buttons = Buttons.getButtons(frame, username);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
@@ -59,7 +59,7 @@ public class Teams {
                 teamButtons[i].addActionListener(
                         e -> {
                             frame.dispose();
-                            TeamDetails.getTeam(teamsID[iAux]);
+                            TeamDetails.getTeam(teamsID[iAux], username);
                         }
 
                 );

@@ -11,7 +11,7 @@ import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 
 public class TeamDetails {
 
-    public static void getTeam(String teamID) {
+    public static void getTeam(String teamID, String username) {
 
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
@@ -19,7 +19,7 @@ public class TeamDetails {
         panel.setBackground(Color.WHITE);
         frame.getContentPane().add(panel);
 
-        JButton[] buttons = Buttons.getButtons(frame);
+        JButton[] buttons = Buttons.getButtons(frame, username);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }

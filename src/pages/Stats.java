@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Stats {
 
-    public static void getStats() {
+    public static void getStats(String username) {
 
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
@@ -17,7 +17,7 @@ public class Stats {
 
         frame.add(panel);
 
-        JButton[] buttons = Buttons.getButtons(frame);
+        JButton[] buttons = Buttons.getButtons(frame, username);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }

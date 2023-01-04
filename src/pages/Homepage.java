@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.util.Random;
 
 public class Homepage extends JFrame {
-    public static void getHomepage() {
+    public static void getHomepage(String username) {
 
         JPanel panel = new JPanel();
         JFrame frame = BuildFrame.getFrame();
@@ -22,7 +22,7 @@ public class Homepage extends JFrame {
 
         ImageIcon icon;
 
-        JButton[] buttons = Buttons.getButtons(frame);
+        JButton[] buttons = Buttons.getButtons(frame, username);
         for (int i = 0; i < 8; i++) {
             panel.add(buttons[i]);
         }
@@ -83,7 +83,7 @@ public class Homepage extends JFrame {
             detailsButtons[i].addActionListener(
                     e -> {
                         frame.dispose();
-                        News.getNews(newsHome[iAux]);
+                        News.getNews(newsHome[iAux], username);
                     }
 
             );

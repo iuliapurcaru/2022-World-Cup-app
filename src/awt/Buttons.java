@@ -9,7 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Buttons {
-    public static JButton[] getButtons(JFrame frame) {
+    public static JButton[] getButtons(JFrame frame, String username) {
         JButton[] buttons = new JButton[8];
         ImageIcon icon;
         Font font = new Font("Century Gothic", Font.BOLD, 15);
@@ -32,7 +32,7 @@ public class Buttons {
         buttons[1].addActionListener(
                 e -> {
                     frame.dispose();
-                    Homepage.getHomepage();
+                    Homepage.getHomepage(username);
                 }
         );
 
@@ -43,7 +43,7 @@ public class Buttons {
         buttons[2].addActionListener(
                 e -> {
                     frame.dispose();
-                    Teams.getTeams();
+                    Teams.getTeams(username);
                 }
 
         );
@@ -54,7 +54,7 @@ public class Buttons {
         buttons[3].addActionListener(
                 e -> {
                     frame.dispose();
-                    Matches.getMatches();
+                    Matches.getMatches(username);
                 }
 
         );
@@ -66,7 +66,7 @@ public class Buttons {
         buttons[4].addActionListener(
                 e -> {
                     frame.dispose();
-                    Groups.getGroups();
+                    Groups.getGroups(username);
                 }
 
         );
@@ -78,7 +78,7 @@ public class Buttons {
         buttons[5].addActionListener(
                 e -> {
                     frame.dispose();
-                    Stats.getStats();
+                    Stats.getStats(username);
                 }
 
         );
@@ -90,7 +90,7 @@ public class Buttons {
         buttons[6].addActionListener(
                 e -> {
                     frame.dispose();
-                    Account.getAccount();
+                    Account.getAccount(username);
                 }
 
         );
