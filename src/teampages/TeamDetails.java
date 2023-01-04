@@ -95,7 +95,7 @@ public class TeamDetails {
                             textArea.setText(textArea.getText().concat(
                                     "Confederation: " + resultSet.getString(1) + "\n" +
                                             "Head coach: " + resultSet.getString(2) + "\n" +
-                                            "Captain: " + resultSet.getString(3) +
+                                            "Captain: " + resultSet.getString(3) + " " +
                                             resultSet.getString(4) + "\n\n" +
                                             "Matches played: " + "\n" +
                                             "Goals scored: " + "\n" +
@@ -154,7 +154,7 @@ public class TeamDetails {
                             }
 
                             textArea.setText(textArea.getText().concat(
-                                    resultSet.getString(1) +
+                                    resultSet.getString(1) + " " +
                                             resultSet.getString(2) + tab +
                                             resultSet.getString(3) + "\t" +
                                             resultSet.getString(4) + "\t" +
