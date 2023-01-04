@@ -1,6 +1,5 @@
 package database;
 
-import database.DatabaseConnection;
 import pages.Login;
 
 import javax.swing.*;

@@ -67,7 +67,7 @@ public class Login extends JFrame {
         signInButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         signInButton.addActionListener(
-                e -> LoginCheck.loginCheck(usernameField.getText(), passwordField.getText(), frame)
+                e -> LoginCheck.loginCheck(usernameField.getText(), String.valueOf(passwordField.getPassword()), frame)
 
         );
         panel.add(signInButton);

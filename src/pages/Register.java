@@ -2,7 +2,6 @@ package pages;
 
 import awt.BuildFrame;
 import database.RegisterAccount;
-import pages.Login;
 
 import javax.swing.*;
 import java.awt.*;
@@ -85,10 +84,10 @@ public class Register {
         registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         registerButton.addActionListener(
                 e -> RegisterAccount.registerAccount(usernameField.getText(),
-                                                emailField.getText(),
-                                                passwordField.getText(),
-                                                confirmPasswordField.getText(),
-                                                frame)
+                                                     emailField.getText(),
+                                                     String.valueOf(passwordField.getPassword()),
+                                                     String.valueOf(confirmPasswordField.getPassword()),
+                                                     frame)
 
         );
         panel.add(registerButton);

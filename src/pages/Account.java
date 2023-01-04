@@ -3,17 +3,12 @@ package pages;
 import awt.BuildFrame;
 import awt.Buttons;
 import database.DatabaseConnection;
-import database.LoginCheck;
-
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Objects;
-
-import static jdk.nashorn.internal.objects.NativeString.toUpperCase;
 
 public class Account {
 
@@ -69,18 +64,17 @@ public class Account {
         changePassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         changePassword.addActionListener(
                 e -> {
-                    if (!Objects.equals(passwordField.getText(), confirmPassword.getText())) {
+                    if (!Objects.equals(String.valueOf(passwordField.getPassword()), String.valueOf(confirmPassword.getPassword()))) {
                         optionPaneFont.setText("Passwords do not match!");
                         JOptionPane.showMessageDialog(null, optionPaneFont);
                     }
-                    else if (Objects.equals(passwordField.getText(), "")) {
+                    else if (Objects.equals(String.valueOf(passwordField.getPassword()), "")) {
                         optionPaneFont.setText("Password cannot be empty!");
                         JOptionPane.showMessageDialog(null, optionPaneFont);
                     }
                     else {
 
                         Connection connection;
-                        ResultSet resultSet;
                         PreparedStatement preparedStatement;
                         String updateUser = "UPDATE users SET password = ? WHERE username = ?";
                         UIManager.put("OptionPane.minimumSize", new Dimension(100, 50));
@@ -88,7 +82,7 @@ public class Account {
                         try {
                             connection = DatabaseConnection.getConnection();
                             preparedStatement = connection.prepareStatement(updateUser);
-                            preparedStatement.setString(1, passwordField.getText());
+                            preparedStatement.setString(1, String.valueOf(passwordField.getPassword()));
                             preparedStatement.setString(2, username);
                             preparedStatement.executeUpdate();
 
@@ -117,7 +111,6 @@ public class Account {
                     int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?");
                     if(input == 0) {
                         Connection connection;
-                        ResultSet resultSet;
                         PreparedStatement preparedStatement;
                         String deleteUser = "DELETE FROM users WHERE username = ?";
                         UIManager.put("OptionPane.minimumSize", new Dimension(100,50));
