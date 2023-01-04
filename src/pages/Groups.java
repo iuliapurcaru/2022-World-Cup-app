@@ -5,7 +5,6 @@ import awt.Buttons;
 import database.DatabaseConnection;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +17,6 @@ public class Groups {
         JFrame frame = BuildFrame.getFrame();
         panel.setLayout(null);
         panel.setBackground(Color.WHITE);
-        Font font = new Font("Century Gothic", Font.BOLD, 20);
         frame.add(panel);
 
         JButton[] buttons = Buttons.getButtons(frame, username);
@@ -103,21 +101,6 @@ public class Groups {
                     catch (Exception err){
                         err.printStackTrace();
                     }
-
-//                    String[][] data ={ {"1","Portugal","3", "2", "1", "0", "6"},
-//                            {"2","South Korea","3", "1", "1", "1", "4"},
-//                            {"3","Uruguay","3", "1", "1", "1", "4"},
-//                            {"4","Ghana","3", "1", "0", "2", "0"} };
-//                    String[] column ={"POS", "TEAM", "PLAYED", "WINS", "DRAWS", "LOSSES", "POINTS"};
-//                    DefaultTableModel model = new DefaultTableModel(data, column);
-//                    JTable table = new JTable(model);
-//                    table.setBounds(0,40,500,300);
-//                    table.getTableHeader().setFont(font);
-//                    table.setFont(new Font("Century Gothic", Font.PLAIN, 19));
-//                    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//                    table.getColumnModel().getColumn(1).setPreferredWidth(200);
-//                    table.setRowHeight(30);
-//                    scrollPane.add(table);
                 }
         );
         panel.add(doneButton);
