@@ -31,8 +31,8 @@ public class Groups {
         panel.add(selectLabel);
 
         JLabel groupLabel = new JLabel();
-        groupLabel.setFont(new Font("Century Gothic", Font.BOLD, 20));
-        groupLabel.setBounds(30, 132, 180, 100);
+        groupLabel.setFont(new Font("Century Gothic", Font.BOLD, 30));
+        groupLabel.setBounds(520, 92, 180, 100);
         panel.add(groupLabel);
 
         String[] optionsToChoose = {"Group A", "Group B", "Group C", "Group D", "Group E", "Group F", "Group G", "Group H"};
@@ -48,7 +48,7 @@ public class Groups {
         textArea.setLineWrap(true);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setBounds(10, 212, 1162, 500);
+        scrollPane.setBounds(10, 182, 1162, 530);
         //scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         panel.add(scrollPane);
 
@@ -62,9 +62,9 @@ public class Groups {
                 e -> {
                     String input = comboBox.getItemAt(comboBox.getSelectedIndex());
                     groupLabel.setText(input);
-                    textArea.setText("POS\tTEAM\tPLAYED\tWINS\tDRAWS\tLOSSES\tPOINTS\n" +
-                            "-----------------------------------------------------------------------" +
-                            "-----------------------------------------------------------------------\n");
+                    textArea.setText("\t                POS     TEAM\tPLAYED      WINS     DRAWS     LOSSES     POINTS\n" +
+                            "\t                ----------------------------------------" +
+                            "--------------------------------------------------------\n");
                     try {
                         Connection connection;
                         ResultSet resultSet;
@@ -83,18 +83,43 @@ public class Groups {
                         while(resultSet.next()) {
                             i++;
                             textArea.setText(textArea.getText().concat(
-                                            " " + i + "\t" +
+                                            "\t                 " + i + "\t  " +
                                                 resultSet.getString(1) + "\t" +
-                                                "     3\t" +
-                                                "   4\t" +
-                                                "    5\t" +
-                                                "    6\t    " +
+                                                "     3       " +
+                                                "       4      " +
+                                                "       5        " +
+                                                "       6              " +
                                                 resultSet.getString(2) + "\n"));
                         }
 
                         textArea.setText(textArea.getText().concat(
-                                    "-----------------------------------------------------------------------" +
-                                        "-----------------------------------------------------------------------\n"));
+                                    "\t                ----------------------------------------" +
+                                        "--------------------------------------------------------\n\n" +
+                                            "MATCHES\n" +
+                                            "------------------------------------------------------\n"));
+
+                        query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
+                                "FROM matches M, teams A, teams B, stadiums S, referees R " +
+                                "WHERE (M.Etapa = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (M.ArbitruSefID = R.ArbitruSefID) " +
+                                "ORDER BY data";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, input);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while(resultSet.next()) {
+                            textArea.setText(textArea.getText().concat(
+                                    "  " + resultSet.getString(1) + "\t   " +     //team 1
+                                            resultSet.getString(2) + "\t" +   //
+                                            resultSet.getString(3) + "\t" +   //team 2
+                                            resultSet.getString(4) + "  " +   //time
+                                            resultSet.getString(5) + "\n" +   //date
+                                            resultSet.getString(6) + ", " +   //stadium
+                                            resultSet.getString(7) + "\n" +   //city
+                                            "Attendance: " + resultSet.getString(8) + "\n" +
+                                            "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
+                                            " (" + resultSet.getString(11) + ")\n\n"));
+                        }
 
                         connection.close();
                     }

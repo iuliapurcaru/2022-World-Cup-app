@@ -186,22 +186,30 @@ public class TeamDetails {
                         Connection connection;
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String Query = "SELECT A.Denumire, M.scor, B.Denumire " +
-                                "FROM matches M, teams A, teams B " +
-                                "WHERE (M.Tara1ID = ? OR M.Tara2ID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) " +
+                        String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta, M.Etapa " +
+                                "FROM matches M, teams A, teams B, stadiums S, referees R " +
+                                "WHERE (M.Tara1ID = ? OR M.Tara2ID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (M.ArbitruSefID = R.ArbitruSefID) " +
                                 "ORDER BY data";
 
                         connection = DatabaseConnection.getConnection();
-                        preparedStatement = connection.prepareStatement(Query);
+                        preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, teamID);
                         preparedStatement.setString(2, teamID);
                         resultSet = preparedStatement.executeQuery();
 
                         while(resultSet.next()) {
                             textArea.setText(textArea.getText().concat(
-                                    resultSet.getString(1) + "\t" +
-                                            resultSet.getString(2) + "        " +
-                                            resultSet.getString(3) + "\n"));
+                                    "  " + resultSet.getString(1) + "\t   " +     //team 1
+                                            resultSet.getString(2) + "\t" +   //
+                                            resultSet.getString(3) + "\t" +   //team 2
+                                            resultSet.getString(4) + "  " +   //time
+                                            resultSet.getString(5) + "\n" +   //date
+                                            resultSet.getString(6) + ", " +   //stadium
+                                            resultSet.getString(7) + "\n" +   //city
+                                            "Attendance: " + resultSet.getString(8) + "\n" +
+                                            "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
+                                            " (" + resultSet.getString(11) + ")\n" +
+                                            "Stage: " + resultSet.getString(12) + "\n\n"));
                         }
 
                         connection.close();
