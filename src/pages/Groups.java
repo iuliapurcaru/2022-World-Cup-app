@@ -152,35 +152,33 @@ public class Groups {
 
         matchButton.addActionListener(
                 r -> {
-
-                    Connection connection1;
-                    connection1 = DatabaseConnection.getConnection();
+                    String input = matchComboBox.getItemAt(matchComboBox.getSelectedIndex());
+                    String inputMatch = null;
+                    for(int j = 0; j < 6; j++) {
+                        if(Objects.equals(matchesToChoose[j], input)) {
+                            inputMatch = matchesID[j];
+                            break;
+                        }
+                    }
 
                     try {
 
-                        String query1 = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
+                        Connection connection;
+                        ResultSet resultSet;
+                        PreparedStatement preparedStatement;
+                        String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
                                 "FROM matches M, teams A, teams B, stadiums S, referees R " +
                                 "WHERE (M.MeciID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (M.ArbitruSefID = R.ArbitruSefID) " +
                                 "ORDER BY data";
 
-                        String input = matchComboBox.getItemAt(matchComboBox.getSelectedIndex());
-                        String inputMatch = null;
-                        for(int j = 0; j < 6; j++) {
-                            if(Objects.equals(matchesToChoose[j], input)) {
-                                inputMatch = matchesID[j];
-                                break;
-                            }
-                        }
-
-                        ResultSet resultSet;
-                        PreparedStatement preparedStatement;
-                        preparedStatement = connection1.prepareStatement(query1);
+                        connection = DatabaseConnection.getConnection();
+                        preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, inputMatch);
                         resultSet = preparedStatement.executeQuery();
 
                         while (resultSet.next()) {
                             matchesTextArea.setText(
-                                    "  " + resultSet.getString(1) + "\t   " +   //team 1
+                                            resultSet.getString(1) + "\t   " +   //team 1
                                             resultSet.getString(2) + "          " +         //
                                             resultSet.getString(3) + "\n" +         //team 2
                                             resultSet.getString(4) + "  " +         //time
@@ -190,6 +188,42 @@ public class Groups {
                                             "Attendance: " + resultSet.getString(8) + "\n" +
                                             "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
                                             " (" + resultSet.getString(11) + ")\n\n");
+                        }
+
+                        query = "SELECT P.Prenume, P.Nume, G.Minut, G.Tip, T.Denumire " +
+                                "FROM goals G, players P, teams T " +
+                                "WHERE (G.MeciID = ?) AND (P.JucatorID = G.JucatorID) AND (T.TaraID = P.TaraID) " +
+                                "ORDER BY G.Minut";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, inputMatch);
+                        resultSet = preparedStatement.executeQuery();
+
+                        matchesTextArea.setText(matchesTextArea.getText().concat("Goals:\n"));
+                        String name;
+                        String pName;
+                        String type;
+
+                        while (resultSet.next()) {
+                            name = resultSet.getString(1);
+                            if(Objects.equals(name, "")) {
+                                pName = "";
+                            }
+                            else {
+                                pName = name.charAt(0) + ". ";
+                            }
+
+                            type = resultSet.getString(4);
+                            if(Objects.equals(type, "(A)")) {
+                                type = "    ";
+                            }
+
+                            matchesTextArea.setText(matchesTextArea.getText().concat(
+                                            pName +   //initial
+                                            resultSet.getString(2) + "\t" +         //name
+                                            resultSet.getString(3) + " " +         //minute
+                                            type + " (" +        //type
+                                            resultSet.getString(5) + ")\n"));
                         }
                     }
                     catch (Exception err){
