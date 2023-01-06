@@ -97,28 +97,29 @@ public class Groups {
                             "--------------------------------------------------------\n");
                     try {
                         Connection connection;
+                        connection = DatabaseConnection.getConnection();
+
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String query = "SELECT T.denumire, T.PunctajGrupe " +
+                        String query = "SELECT T.denumire, T.PunctajGrupe, T.GroupWins, T.GroupDraws, T.GroupLosses " +
                                        "FROM teams T " +
                                        "WHERE T.Grupa = ? " +
                                        "ORDER BY T.PunctajGrupe DESC";
 
-                        connection = DatabaseConnection.getConnection();
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, input.substring(input.length() - 1));
                         resultSet = preparedStatement.executeQuery();
-                        int i = 0;
 
+                        int counter = 0;
                         while(resultSet.next()) {
-                            i++;
+                            counter++;
                             tableTextArea.setText(tableTextArea.getText().concat(
-                                            "\t                 " + i + "\t  " +
+                                            "\t                 " + counter + "\t  " +
                                                 resultSet.getString(1) + "\t" +
                                                 "     3       " +
-                                                "       4      " +
-                                                "       5        " +
-                                                "       6              " +
+                                                "       " + resultSet.getString(3) + "      " +
+                                                "       " + resultSet.getString(4) + "        " +
+                                                "       " + resultSet.getString(5) + "              " +
                                                 resultSet.getString(2) + "\n"));
                         }
 
@@ -130,7 +131,7 @@ public class Groups {
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, input);
                         resultSet = preparedStatement.executeQuery();
-                        i = 0;
+                        int i = 0;
 
                         while(resultSet.next()) {
                             matchesToChoose[i] = resultSet.getString(1) + " - " +

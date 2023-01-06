@@ -29,11 +29,17 @@ public class Account {
         }
         buttons[7].setText("MY ACCOUNT");
 
-        JLabel user = new JLabel("HELLO, " +username);
+        JLabel user = new JLabel("HELLO, " + username);
         user.setBounds(70, 140, 500, 40);
         user.setFont(new Font("Century Gothic", Font.BOLD, 33));
         user.setForeground(Color.BLACK);
         panel.add(user);
+
+        JLabel changeLabel = new JLabel("Change password:");
+        changeLabel.setBounds(70,218,800,33);
+        changeLabel.setForeground(Color.BLACK);
+        changeLabel.setFont(new Font("Century Gothic", Font.BOLD, 26));
+        panel.add(changeLabel);
 
         JLabel newPassword = new JLabel("New password");
         newPassword.setBounds(70,268,800,20);

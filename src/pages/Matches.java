@@ -33,7 +33,7 @@ public class Matches {
         stageLabel.setBounds(520, 92, 180, 100);
         panel.add(stageLabel);
 
-        String[] optionsToChoose = {"Upcoming", "Groups", "Round of 16", "Quarter-finals", "Semifinals", "Finals"};
+        String[] optionsToChoose = {"Round of 16", "Quarter-finals", "Semifinals", "Finals"};
         JComboBox<String> comboBox = new JComboBox<>(optionsToChoose);
         comboBox.setFont(new Font("Century Gothic", Font.PLAIN, 19));
         comboBox.setBounds(200, 122, 160, 40);
