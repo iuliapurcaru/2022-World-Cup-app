@@ -28,10 +28,10 @@ public class TeamDetails {
             Connection connection;
             ResultSet resultSet;
             PreparedStatement preparedStatement;
-            String newsQuery = "SELECT denumire, flag FROM teams WHERE TaraID = ?";
+            String query = "SELECT denumire, flag FROM teams WHERE TaraID = ?";
 
             connection = DatabaseConnection.getConnection();
-            preparedStatement = connection.prepareStatement(newsQuery);
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, teamID);
             resultSet = preparedStatement.executeQuery();
 
@@ -82,13 +82,17 @@ public class TeamDetails {
                         Connection connection;
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String Query = "SELECT DISTINCT T.confederatie, T.antrenor, P.prenume, P.nume\n" +
-                                "FROM matches M, teams T, players P\n" +
+                        String query = "SELECT DISTINCT T.confederatie, T.antrenor, P.prenume, P.nume, (SELECT COUNT(MeciID) " +
+                                                                                                            "FROM matches " +
+                                                                                                            "WHERE (Tara1ID = ? OR Tara2ID = ?) AND (Scor <> '')) " +
+                                "FROM matches M, teams T, players P " +
                                 "WHERE (T.taraID = ?) AND (T.capitanID = P.jucatorID)";
 
                         connection = DatabaseConnection.getConnection();
-                        preparedStatement = connection.prepareStatement(Query);
+                        preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, teamID);
+                        preparedStatement.setString(2, teamID);
+                        preparedStatement.setString(3, teamID);
                         resultSet = preparedStatement.executeQuery();
 
                         while(resultSet.next()) {
@@ -97,13 +101,15 @@ public class TeamDetails {
                                             "Head coach: " + resultSet.getString(2) + "\n" +
                                             "Captain: " + resultSet.getString(3) + " " +
                                             resultSet.getString(4) + "\n\n" +
-                                            "Matches played: " + "\n" +
+                                            "Matches played: " + resultSet.getString(5) + "\n" +
                                             "Goals scored: " + "\n" +
                                             "Own goals: " + "\n" +
                                             "Penalties scored: " + "\n" +
-                                            "Top scorer: " + "\n" +
                                             "Yellow cards: " + "\n" +
-                                            "Red cards: "));
+                                            "Red cards: " + "\n\n" +
+                                            "Top scorer: " + "\n" +
+                                            "Youngest player: " + "\n" +
+                                            "Oldest player: "));
                         }
 
                         connection.close();
@@ -131,15 +137,15 @@ public class TeamDetails {
                         Connection connection;
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String Query = "SELECT P.prenume, P.nume, P.numar, P.pozitie, P.datanasterii, P.inaltime, (SELECT COUNT(G.JucatorID)\n" +
-                                "                                                                FROM goals G\n" +
-                                "                                                                WHERE G.jucatorID = P.jucatorID AND tip IN ('(A)', '(P)'))\n" +
-                                "FROM players P\n" +
-                                "WHERE P.TaraID = ?\n" +
+                        String query = "SELECT P.prenume, P.nume, P.numar, P.pozitie, P.datanasterii, P.inaltime, (SELECT COUNT(G.JucatorID) " +
+                                "                                                                FROM goals G " +
+                                "                                                                WHERE G.jucatorID = P.jucatorID AND tip IN ('(A)', '(P)')) " +
+                                "FROM players P " +
+                                "WHERE P.TaraID = ? " +
                                 "ORDER BY P.positionID, P.numar";
 
                         connection = DatabaseConnection.getConnection();
-                        preparedStatement = connection.prepareStatement(Query);
+                        preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, teamID);
                         resultSet = preparedStatement.executeQuery();
 
@@ -196,12 +202,14 @@ public class TeamDetails {
                         preparedStatement.setString(1, teamID);
                         preparedStatement.setString(2, teamID);
                         resultSet = preparedStatement.executeQuery();
+                        int i = 0;
 
                         while(resultSet.next()) {
+                            i++;
                             textArea.setText(textArea.getText().concat(
-                                    "  " + resultSet.getString(1) + "\t   " +     //team 1
-                                            resultSet.getString(2) + "\t" +   //
-                                            resultSet.getString(3) + "\t" +   //team 2
+                                    i + ".  " + resultSet.getString(1) + "\t   " +     //team 1
+                                            resultSet.getString(2) + "          " +   //
+                                            resultSet.getString(3) + "\n" +   //team 2
                                             resultSet.getString(4) + "  " +   //time
                                             resultSet.getString(5) + "\n" +   //date
                                             resultSet.getString(6) + ", " +   //stadium

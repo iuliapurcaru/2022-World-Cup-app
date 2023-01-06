@@ -49,7 +49,6 @@ public class Groups {
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setBounds(10, 182, 1162, 530);
-        //scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         panel.add(scrollPane);
 
         JButton doneButton = new JButton("SELECT");
@@ -109,13 +108,13 @@ public class Groups {
 
                         while(resultSet.next()) {
                             textArea.setText(textArea.getText().concat(
-                                    "  " + resultSet.getString(1) + "\t   " +     //team 1
-                                            resultSet.getString(2) + "\t" +   //
-                                            resultSet.getString(3) + "\t" +   //team 2
-                                            resultSet.getString(4) + "  " +   //time
-                                            resultSet.getString(5) + "\n" +   //date
-                                            resultSet.getString(6) + ", " +   //stadium
-                                            resultSet.getString(7) + "\n" +   //city
+                                    "  " + resultSet.getString(1) + "\t   " +   //team 1
+                                            resultSet.getString(2) + "          " +         //
+                                            resultSet.getString(3) + "\n" +         //team 2
+                                            resultSet.getString(4) + "  " +         //time
+                                            resultSet.getString(5) + "\n" +         //date
+                                            resultSet.getString(6) + ", " +         //stadium
+                                            resultSet.getString(7) + "\n" +         //city
                                             "Attendance: " + resultSet.getString(8) + "\n" +
                                             "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
                                             " (" + resultSet.getString(11) + ")\n\n"));
