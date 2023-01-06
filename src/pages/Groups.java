@@ -9,6 +9,7 @@ import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Objects;
 
 public class Groups {
 
@@ -30,6 +31,11 @@ public class Groups {
         selectLabel.setBounds(30, 92, 180, 100);
         panel.add(selectLabel);
 
+        JLabel matchesLabel = new JLabel("Select a match:");
+        matchesLabel.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+        matchesLabel.setBounds(30, 378, 180, 100);
+        panel.add(matchesLabel);
+
         JLabel groupLabel = new JLabel();
         groupLabel.setFont(new Font("Century Gothic", Font.BOLD, 30));
         groupLabel.setBounds(520, 92, 180, 100);
@@ -41,15 +47,40 @@ public class Groups {
         comboBox.setBounds(200, 122, 130, 40);
         panel.add(comboBox);
 
-        JTextArea textArea = new JTextArea();
-        textArea.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-        textArea.setEditable(false);
-        textArea.setWrapStyleWord(true);
-        textArea.setLineWrap(true);
+        String[] matchesToChoose = new String[6];
+        String[] matchesID = new String[6];
+        JComboBox<String> matchComboBox = new JComboBox<>();
+        matchComboBox.setFont(new Font("Century Gothic", Font.PLAIN, 19));
+        matchComboBox.setBounds(200, 408, 300, 40);
+        panel.add(matchComboBox);
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setBounds(10, 182, 1162, 530);
-        panel.add(scrollPane);
+        JTextArea tableTextArea = new JTextArea();
+        tableTextArea.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+        tableTextArea.setEditable(false);
+        tableTextArea.setWrapStyleWord(true);
+        tableTextArea.setLineWrap(true);
+
+        JScrollPane tableScrollPane = new JScrollPane(tableTextArea);
+        tableScrollPane.setBounds(10, 182, 1162, 215);
+        panel.add(tableScrollPane);
+
+        JTextArea matchesTextArea = new JTextArea();
+        matchesTextArea.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+        matchesTextArea.setEditable(false);
+        matchesTextArea.setWrapStyleWord(true);
+        matchesTextArea.setLineWrap(true);
+
+        JScrollPane matchesScrollPane = new JScrollPane(matchesTextArea);
+        matchesScrollPane.setBounds(10, 460, 1162, 250);
+        panel.add(matchesScrollPane);
+
+        JButton matchButton = new JButton("SELECT");
+        matchButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        matchButton.setBounds(520, 408, 130, 40);
+        matchButton.setForeground(Color.WHITE);
+        matchButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
+        matchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        panel.add(matchButton);
 
         JButton doneButton = new JButton("SELECT");
         doneButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
@@ -61,16 +92,16 @@ public class Groups {
                 e -> {
                     String input = comboBox.getItemAt(comboBox.getSelectedIndex());
                     groupLabel.setText(input);
-                    textArea.setText("\t                POS     TEAM\tPLAYED      WINS     DRAWS     LOSSES     POINTS\n" +
+                    tableTextArea.setText("\n\t                POS     TEAM\tPLAYED      WINS     DRAWS     LOSSES     POINTS\n" +
                             "\t                ----------------------------------------" +
                             "--------------------------------------------------------\n");
                     try {
                         Connection connection;
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String query = "SELECT T.denumire, T.PunctajGrupe\n" +
-                                       "FROM teams T\n" +
-                                       "WHERE T.Grupa = ?\n" +
+                        String query = "SELECT T.denumire, T.PunctajGrupe " +
+                                       "FROM teams T " +
+                                       "WHERE T.Grupa = ? " +
                                        "ORDER BY T.PunctajGrupe DESC";
 
                         connection = DatabaseConnection.getConnection();
@@ -81,7 +112,7 @@ public class Groups {
 
                         while(resultSet.next()) {
                             i++;
-                            textArea.setText(textArea.getText().concat(
+                            tableTextArea.setText(tableTextArea.getText().concat(
                                             "\t                 " + i + "\t  " +
                                                 resultSet.getString(1) + "\t" +
                                                 "     3       " +
@@ -91,34 +122,24 @@ public class Groups {
                                                 resultSet.getString(2) + "\n"));
                         }
 
-                        textArea.setText(textArea.getText().concat(
-                                    "\t                ----------------------------------------" +
-                                        "--------------------------------------------------------\n\n" +
-                                            "MATCHES\n" +
-                                            "------------------------------------------------------\n"));
-
-                        query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
-                                "FROM matches M, teams A, teams B, stadiums S, referees R " +
-                                "WHERE (M.Etapa = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (M.ArbitruSefID = R.ArbitruSefID) " +
+                        query = "SELECT A.Denumire, B.Denumire, M.MeciID " +
+                                "FROM matches M, teams A, teams B " +
+                                "WHERE (M.Etapa = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID)" +
                                 "ORDER BY data";
 
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, input);
                         resultSet = preparedStatement.executeQuery();
+                        i = 0;
 
                         while(resultSet.next()) {
-                            textArea.setText(textArea.getText().concat(
-                                    "  " + resultSet.getString(1) + "\t   " +   //team 1
-                                            resultSet.getString(2) + "          " +         //
-                                            resultSet.getString(3) + "\n" +         //team 2
-                                            resultSet.getString(4) + "  " +         //time
-                                            resultSet.getString(5) + "\n" +         //date
-                                            resultSet.getString(6) + ", " +         //stadium
-                                            resultSet.getString(7) + "\n" +         //city
-                                            "Attendance: " + resultSet.getString(8) + "\n" +
-                                            "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
-                                            " (" + resultSet.getString(11) + ")\n\n"));
+                            matchesToChoose[i] = resultSet.getString(1) + " - " +
+                                                 resultSet.getString(2);
+                            matchesID[i] = resultSet.getString(3);
+                            i++;
                         }
+
+                        matchComboBox.setModel(new DefaultComboBoxModel<>(matchesToChoose));
 
                         connection.close();
                     }
@@ -128,6 +149,54 @@ public class Groups {
                 }
         );
         panel.add(doneButton);
+
+        matchButton.addActionListener(
+                r -> {
+
+                    Connection connection1;
+                    connection1 = DatabaseConnection.getConnection();
+
+                    try {
+
+                        String query1 = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
+                                "FROM matches M, teams A, teams B, stadiums S, referees R " +
+                                "WHERE (M.MeciID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (M.ArbitruSefID = R.ArbitruSefID) " +
+                                "ORDER BY data";
+
+                        String input = matchComboBox.getItemAt(matchComboBox.getSelectedIndex());
+                        String inputMatch = null;
+                        for(int j = 0; j < 6; j++) {
+                            if(Objects.equals(matchesToChoose[j], input)) {
+                                inputMatch = matchesID[j];
+                                break;
+                            }
+                        }
+
+                        ResultSet resultSet;
+                        PreparedStatement preparedStatement;
+                        preparedStatement = connection1.prepareStatement(query1);
+                        preparedStatement.setString(1, inputMatch);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while (resultSet.next()) {
+                            matchesTextArea.setText(
+                                    "  " + resultSet.getString(1) + "\t   " +   //team 1
+                                            resultSet.getString(2) + "          " +         //
+                                            resultSet.getString(3) + "\n" +         //team 2
+                                            resultSet.getString(4) + "  " +         //time
+                                            resultSet.getString(5) + "\n" +         //date
+                                            resultSet.getString(6) + ", " +         //stadium
+                                            resultSet.getString(7) + "\n" +         //city
+                                            "Attendance: " + resultSet.getString(8) + "\n" +
+                                            "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
+                                            " (" + resultSet.getString(11) + ")\n\n");
+                        }
+                    }
+                    catch (Exception err){
+                        err.printStackTrace();
+                    }
+                }
+        );
 
     }
 
