@@ -1,7 +1,6 @@
 package pages;
 
 import database.LoginCheck;
-import teampages.Teams;
 
 import java.awt.*;
 import javax.swing.*;

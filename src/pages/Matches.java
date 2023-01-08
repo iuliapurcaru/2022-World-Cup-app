@@ -130,23 +130,22 @@ public class Matches {
 
                     try {
 
-                        Connection connection;
+                        Connection connection = DatabaseConnection.getConnection();
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
                         String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
                                 "FROM matches M, teams A, teams B, stadiums S, referees R " +
                                 "WHERE (M.MeciID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (M.ArbitruSefID = R.ArbitruSefID) " +
-                                "ORDER BY data";
+                                "ORDER BY M.data";
 
-                        connection = DatabaseConnection.getConnection();
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, inputMatch);
                         resultSet = preparedStatement.executeQuery();
 
                         while (resultSet.next()) {
                             textArea.setText(
-                                    resultSet.getString(1) + "\t" +   //team 1
-                                            resultSet.getString(2) + "          " +         //
+                                            resultSet.getString(1) + "\t" +         //team 1
+                                            resultSet.getString(2) + "          " + //score
                                             resultSet.getString(3) + "\n" +         //team 2
                                             resultSet.getString(4) + "  " +         //time
                                             resultSet.getString(5) + "\n" +         //date
