@@ -37,22 +37,9 @@ public class Stats {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         panel.add(scrollPane);
 
-        JButton overviewButton = new JButton("OVERVIEW");
-        overviewButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
-        overviewButton.setBounds(25,122, 200,40);
-        overviewButton.setForeground(Color.WHITE);
-        overviewButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
-        overviewButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        overviewButton.addActionListener(
-                e -> {
-
-                }
-        );
-        panel.add(overviewButton);
-
         JButton goalscorersButton = new JButton("GOALSCORERS");
         goalscorersButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
-        goalscorersButton.setBounds(245,122, 200,40);
+        goalscorersButton.setBounds(25,122, 200,40);
         goalscorersButton.setForeground(Color.WHITE);
         goalscorersButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         goalscorersButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -102,7 +89,7 @@ public class Stats {
 
         JButton disciplineButton = new JButton("DISCIPLINE");
         disciplineButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
-        disciplineButton.setBounds(465,122, 200,40);
+        disciplineButton.setBounds(245,122, 200,40);
         disciplineButton.setForeground(Color.WHITE);
         disciplineButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         disciplineButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -112,6 +99,80 @@ public class Stats {
                 }
         );
         panel.add(disciplineButton);
+
+        JButton refereesButton = new JButton("REFEREES");
+        refereesButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        refereesButton.setBounds(465,122, 200,40);
+        refereesButton.setForeground(Color.WHITE);
+        refereesButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
+        refereesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        refereesButton.addActionListener(
+                e -> {
+                    textArea.setText("There were a total of 36 referees from all six confederations.\n" +
+                            "\tNAME\t\tCOUNTRY\tSTADIUMS\n" +
+                            "\t----------------------------------------------------------------------------------\n");
+
+                    try {
+                        Connection connection = DatabaseConnection.getConnection();
+                        ResultSet resultSet;
+                        PreparedStatement preparedStatement;
+                        String query = "SELECT prenume, nume, TaraProvenienta " +
+                                "FROM referees";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while(resultSet.next()) {
+                            textArea.setText(textArea.getText().concat("\t" +
+                                    resultSet.getString(1) + " " +
+                                    resultSet.getString(2) + "\t" +
+                                    resultSet.getString(3) + "\n"));
+                        }
+
+                    }
+                    catch (Exception err){
+                        err.printStackTrace();
+                    }
+                }
+        );
+        panel.add(refereesButton);
+
+        JButton stadiumsButton = new JButton("STADIUMS");
+        stadiumsButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        stadiumsButton.setBounds(685,122, 200,40);
+        stadiumsButton.setForeground(Color.WHITE);
+        stadiumsButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
+        stadiumsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        stadiumsButton.addActionListener(
+                e -> {
+                    textArea.setText("The matches were played on 8 stadiums in 5 different cities in Qatar.\n\n" +
+                            "\tSTADIUM\t\tCITY\tCAPACITY\tREFEREES\n" +
+                            "\t---------------------------------------------------------------------------------------------------------\n");
+
+                    try {
+                        Connection connection = DatabaseConnection.getConnection();
+                        ResultSet resultSet;
+                        PreparedStatement preparedStatement;
+                        String query = "SELECT denumire, oras, capacitate " +
+                                "FROM stadiums";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while(resultSet.next()) {
+                            textArea.setText(textArea.getText().concat("\t" +
+                                    resultSet.getString(1) + "\t" +
+                                    resultSet.getString(2) + "\t    " +
+                                    resultSet.getString(3) + "\n"));
+                        }
+
+                    }
+                    catch (Exception err){
+                        err.printStackTrace();
+                    }
+                }
+        );
+        panel.add(stadiumsButton);
 
     }
 

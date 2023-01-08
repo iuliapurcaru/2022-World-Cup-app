@@ -185,8 +185,8 @@ public class Groups {
                                             resultSet.getString(3) + "\n" +         //team 2
                                             resultSet.getString(4) + "  " +         //time
                                             resultSet.getString(5) + "\n" +         //date
-                                            resultSet.getString(6) + ", " +         //stadium
-                                            resultSet.getString(7) + "\n" +         //city
+                                            resultSet.getString(7) + ", " +         //city
+                                            resultSet.getString(6) + "\n" +         //stadium
                                             "Attendance: " + resultSet.getString(8) + "\n" +
                                             "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
                                             " (" + resultSet.getString(11) + ")\n\n");
