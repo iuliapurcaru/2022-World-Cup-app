@@ -48,8 +48,9 @@ public class Groups {
         panel.add(comboBox);
 
         String[] matchesToChoose = new String[6];
+        matchesToChoose[0] = "Select a group";
         String[] matchesID = new String[6];
-        JComboBox<String> matchComboBox = new JComboBox<>();
+        JComboBox<String> matchComboBox = new JComboBox<>(matchesToChoose);
         matchComboBox.setFont(new Font("Century Gothic", Font.PLAIN, 19));
         matchComboBox.setBounds(200, 408, 300, 40);
         panel.add(matchComboBox);
@@ -126,7 +127,7 @@ public class Groups {
                         query = "SELECT A.Denumire, B.Denumire, M.MeciID " +
                                 "FROM matches M, teams A, teams B " +
                                 "WHERE (M.Etapa = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID)" +
-                                "ORDER BY data";
+                                "ORDER BY M.data, M.ora";
 
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, input);
@@ -179,7 +180,7 @@ public class Groups {
 
                         while (resultSet.next()) {
                             matchesTextArea.setText(
-                                            resultSet.getString(1) + "\t   " +   //team 1
+                                            resultSet.getString(1) + "\t" +   //team 1
                                             resultSet.getString(2) + "          " +         //
                                             resultSet.getString(3) + "\n" +         //team 2
                                             resultSet.getString(4) + "  " +         //time

@@ -82,17 +82,37 @@ public class TeamDetails {
                         Connection connection;
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String query = "SELECT DISTINCT T.confederatie, T.antrenor, P.prenume, P.nume, (SELECT COUNT(MeciID) " +
-                                                                                                            "FROM matches " +
-                                                                                                            "WHERE (Tara1ID = ? OR Tara2ID = ?) AND (Scor <> '')) " +
+                        String query = "SELECT DISTINCT T.confederatie, T.antrenor, P.prenume, P.nume, T.Grupa, (SELECT COUNT(MeciID) " +
+                                                                                                                "FROM matches " +
+                                                                                                                "WHERE (Tara1ID = ? OR Tara2ID = ?) AND (Scor <> '')), " +
+
+                                                                                                                "(SELECT COUNT(G.GolID)" +
+                                                                                                                "FROM goals G, matches M, players P " +
+                                                                                                                "WHERE (P.TaraID = ?) AND (M.MeciID = G.MeciID) AND (G.JucatorID = P.JucatorID) " +
+                                                                                                                "AND (G.Tip NOT IN (\"Penalty missed\", \"Penalty scored\", \"(OG)\"))), " +
+
+                                                                                                                "(SELECT COUNT(G.GolID) " +
+                                                                                                                "FROM goals G, matches M, players P " +
+                                                                                                                "WHERE(P.TaraID = ?) " +
+                                                                                                                "AND (M.MeciID = G.MeciID) AND (G.JucatorID = P.JucatorID) AND (G.Tip = \"(OG)\")), " +
+
+                                                                                                                "(SELECT COUNT(G.GolID) " +
+                                                                                                                "FROM goals G, matches M, players P " +
+                                                                                                                "WHERE(P.TaraID = ?) " +
+                                                                                                                "AND (M.MeciID = G.MeciID) AND (G.JucatorID = P.JucatorID) AND (G.Tip = \"(P)\")) " +
                                 "FROM matches M, teams T, players P " +
                                 "WHERE (T.taraID = ?) AND (T.capitanID = P.jucatorID)";
 
                         connection = DatabaseConnection.getConnection();
                         preparedStatement = connection.prepareStatement(query);
-                        preparedStatement.setString(1, teamID);
-                        preparedStatement.setString(2, teamID);
-                        preparedStatement.setString(3, teamID);
+                        for(int i = 0; i < 6; i++) {
+                            preparedStatement.setString(i + 1, teamID);
+                        }
+//                        preparedStatement.setString(2, teamID);
+//                        preparedStatement.setString(3, teamID);
+//                        preparedStatement.setString(4, teamID);
+//                        preparedStatement.setString(5, teamID);
+//                        preparedStatement.setString(6, teamID);
                         resultSet = preparedStatement.executeQuery();
 
                         while(resultSet.next()) {
@@ -100,11 +120,12 @@ public class TeamDetails {
                                     "Confederation: " + resultSet.getString(1) + "\n" +
                                             "Head coach: " + resultSet.getString(2) + "\n" +
                                             "Captain: " + resultSet.getString(3) + " " +
-                                            resultSet.getString(4) + "\n\n" +
-                                            "Matches played: " + resultSet.getString(5) + "\n" +
-                                            "Goals scored: " + "\n" +
-                                            "Own goals: " + "\n" +
-                                            "Penalties scored: " + "\n" +
+                                            resultSet.getString(4) + "\n" +
+                                            "Group: " + resultSet.getString(5) + "\n\n" +
+                                            "Matches played: " + resultSet.getString(6) + "\n" +
+                                            "Goals scored: " + resultSet.getString(7) + "\n" +
+                                            "Own goals: " + resultSet.getString(8) + "\n" +
+                                            "Penalties scored: " + resultSet.getString(9) + "\n" +
                                             "Yellow cards: " + "\n" +
                                             "Red cards: " + "\n\n" +
                                             "Top scorer: " + "\n" +
@@ -208,7 +229,7 @@ public class TeamDetails {
                             i++;
                             textArea.setText(textArea.getText().concat(
                                     i + ".  " + resultSet.getString(1) + "\t   " +     //team 1
-                                            resultSet.getString(2) + "          " +   //
+                                            resultSet.getString(2) + "          " +   //score
                                             resultSet.getString(3) + "\n" +   //team 2
                                             resultSet.getString(4) + "  " +   //time
                                             resultSet.getString(5) + "\n" +   //date
