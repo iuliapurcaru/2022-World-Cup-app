@@ -102,7 +102,7 @@ public class TeamDetails {
 
                         query = "SELECT DISTINCT (SELECT COUNT(MeciID) " +
                                         "FROM matches " +
-                                        "WHERE (Tara1ID = ? OR Tara2ID = ?) AND (Scor <> '')), " +
+                                        "WHERE (Tara1ID = ? OR Tara2ID = ?) AND (Scor <> \"  -  \")), " +
 
                                         "(SELECT COUNT(G.GolID)" +
                                         "FROM goals G, matches M, players P " +
