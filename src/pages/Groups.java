@@ -221,11 +221,11 @@ public class Groups {
                             }
 
                             matchesTextArea.setText(matchesTextArea.getText().concat(
-                                            pName +   //initial
-                                            resultSet.getString(2) + "\t" +         //name
-                                            resultSet.getString(3) + " " +         //minute
-                                            type + " (" +        //type
-                                            resultSet.getString(5) + ")\n"));
+                                    pName +   //initial
+                                            resultSet.getString(2) + " (" +         //name
+                                            resultSet.getString(5) + ")\t" +        //country
+                                            resultSet.getString(3) + " " +          //minute
+                                            type + "\n"));                                    //type
                         }
                     }
                     catch (Exception err){

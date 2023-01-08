@@ -44,10 +44,10 @@ public class Matches {
         comboBox.setBounds(200, 122, 160, 40);
         panel.add(comboBox);
 
-        String[] matchesToChoose = new String[8];
-        matchesToChoose[0] = "Select a stage";
+        String[] matchesAux = new String[8];
+        matchesAux[0] = "Select a stage";
         String[] matchesID = new String[8];
-        JComboBox<String> matchComboBox = new JComboBox<>(matchesToChoose);
+        JComboBox<String> matchComboBox = new JComboBox<>(matchesAux);
         matchComboBox.setFont(new Font("Century Gothic", Font.PLAIN, 19));
         matchComboBox.setBounds(540, 122, 300, 40);
         panel.add(matchComboBox);
@@ -94,15 +94,19 @@ public class Matches {
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, input);
                         resultSet = preparedStatement.executeQuery();
-                        int i = 0;
 
+                        int i = 0;
+                        int matchesCounter = 0;
                         while (resultSet.next()) {
-                            matchesToChoose[i] = resultSet.getString(1) + " - " +
-                                                 resultSet.getString(2);
+                            matchesAux[i] = resultSet.getString(1) + " - " +
+                                            resultSet.getString(2);
                             matchesID[i] = resultSet.getString(3);
                             i++;
+                            matchesCounter++;
                         }
 
+                        String[] matchesToChoose = new String[matchesCounter];
+                        System.arraycopy(matchesAux, 0, matchesToChoose, 0, matchesCounter);
                         matchComboBox.setModel(new DefaultComboBoxModel<>(matchesToChoose));
                     }
                     catch (Exception err){
@@ -117,8 +121,8 @@ public class Matches {
                 r -> {
                     String input = matchComboBox.getItemAt(matchComboBox.getSelectedIndex());
                     String inputMatch = null;
-                    for(int j = 0; j < 6; j++) {
-                        if(Objects.equals(matchesToChoose[j], input)) {
+                    for(int j = 0; j < 8; j++) {
+                        if(Objects.equals(matchesAux[j], input)) {
                             inputMatch = matchesID[j];
                             break;
                         }
@@ -156,7 +160,7 @@ public class Matches {
                         query = "SELECT P.Prenume, P.Nume, G.Minut, G.Tip, T.Denumire " +
                                 "FROM goals G, players P, teams T " +
                                 "WHERE (G.MeciID = ?) AND (P.JucatorID = G.JucatorID) AND (T.TaraID = P.TaraID) " +
-                                "ORDER BY G.Minut";
+                                "ORDER BY G.GolID";
 
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, inputMatch);
@@ -183,10 +187,10 @@ public class Matches {
 
                             textArea.setText(textArea.getText().concat(
                                     pName +   //initial
-                                            resultSet.getString(2) + "\t" +         //name
-                                            resultSet.getString(3) + " " +         //minute
-                                            type + " (" +        //type
-                                            resultSet.getString(5) + ")\n"));
+                                            resultSet.getString(2) + " (" +         //name
+                                            resultSet.getString(5) + ")\t" +        //country
+                                            resultSet.getString(3) + " " +          //minute
+                                            type + "\n"));                                    //type
                         }
                     }
                     catch (Exception err){
