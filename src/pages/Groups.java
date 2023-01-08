@@ -115,7 +115,7 @@ public class Groups {
                         while(resultSet.next()) {
                             counter++;
                             tableTextArea.setText(tableTextArea.getText().concat(
-                                            "\t                 " + counter + "\t  " +
+                                          "\t                 " + counter + "\t  " +
                                                 resultSet.getString(1) + "\t" +
                                                 "     3       " +
                                                 "       " + resultSet.getString(3) + "      " +
@@ -171,7 +171,7 @@ public class Groups {
                         String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
                                 "FROM matches M, teams A, teams B, stadiums S, referees R " +
                                 "WHERE (M.MeciID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (M.ArbitruSefID = R.ArbitruSefID) " +
-                                "ORDER BY data";
+                                "ORDER BY M.Data";
 
                         connection = DatabaseConnection.getConnection();
                         preparedStatement = connection.prepareStatement(query);
@@ -221,7 +221,7 @@ public class Groups {
                             }
 
                             matchesTextArea.setText(matchesTextArea.getText().concat(
-                                    pName +   //initial
+                                            pName +   //initial
                                             resultSet.getString(2) + " (" +         //name
                                             resultSet.getString(5) + ")\t" +        //country
                                             resultSet.getString(3) + " " +          //minute

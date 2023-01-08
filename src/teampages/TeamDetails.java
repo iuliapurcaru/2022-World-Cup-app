@@ -82,37 +82,13 @@ public class TeamDetails {
                         Connection connection;
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String query = "SELECT DISTINCT T.confederatie, T.antrenor, P.prenume, P.nume, T.Grupa, (SELECT COUNT(MeciID) " +
-                                                                                                                "FROM matches " +
-                                                                                                                "WHERE (Tara1ID = ? OR Tara2ID = ?) AND (Scor <> '')), " +
-
-                                                                                                                "(SELECT COUNT(G.GolID)" +
-                                                                                                                "FROM goals G, matches M, players P " +
-                                                                                                                "WHERE (P.TaraID = ?) AND (M.MeciID = G.MeciID) AND (G.JucatorID = P.JucatorID) " +
-                                                                                                                "AND (G.Tip NOT IN (\"Penalty missed\", \"Penalty scored\", \"(OG)\"))), " +
-
-                                                                                                                "(SELECT COUNT(G.GolID) " +
-                                                                                                                "FROM goals G, matches M, players P " +
-                                                                                                                "WHERE(P.TaraID = ?) " +
-                                                                                                                "AND (M.MeciID = G.MeciID) AND (G.JucatorID = P.JucatorID) AND (G.Tip = \"(OG)\")), " +
-
-                                                                                                                "(SELECT COUNT(G.GolID) " +
-                                                                                                                "FROM goals G, matches M, players P " +
-                                                                                                                "WHERE(P.TaraID = ?) " +
-                                                                                                                "AND (M.MeciID = G.MeciID) AND (G.JucatorID = P.JucatorID) AND (G.Tip = \"(P)\")) " +
+                        String query = "SELECT DISTINCT T.confederatie, T.antrenor, P.prenume, P.nume, T.Grupa " +
                                 "FROM matches M, teams T, players P " +
                                 "WHERE (T.taraID = ?) AND (T.capitanID = P.jucatorID)";
 
                         connection = DatabaseConnection.getConnection();
                         preparedStatement = connection.prepareStatement(query);
-                        for(int i = 0; i < 6; i++) {
-                            preparedStatement.setString(i + 1, teamID);
-                        }
-//                        preparedStatement.setString(2, teamID);
-//                        preparedStatement.setString(3, teamID);
-//                        preparedStatement.setString(4, teamID);
-//                        preparedStatement.setString(5, teamID);
-//                        preparedStatement.setString(6, teamID);
+                        preparedStatement.setString(1, teamID);
                         resultSet = preparedStatement.executeQuery();
 
                         while(resultSet.next()) {
@@ -121,16 +97,115 @@ public class TeamDetails {
                                             "Head coach: " + resultSet.getString(2) + "\n" +
                                             "Captain: " + resultSet.getString(3) + " " +
                                             resultSet.getString(4) + "\n" +
-                                            "Group: " + resultSet.getString(5) + "\n\n" +
-                                            "Matches played: " + resultSet.getString(6) + "\n" +
-                                            "Goals scored: " + resultSet.getString(7) + "\n" +
-                                            "Own goals: " + resultSet.getString(8) + "\n" +
-                                            "Penalties scored: " + resultSet.getString(9) + "\n" +
-                                            "Yellow cards: " + "\n" +
-                                            "Red cards: " + "\n\n" +
-                                            "Top scorer: " + "\n" +
-                                            "Youngest player: " + "\n" +
-                                            "Oldest player: "));
+                                            "Group: " + resultSet.getString(5) + "\n\n"));
+                        }
+
+                        query = "SELECT DISTINCT (SELECT COUNT(MeciID) " +
+                                        "FROM matches " +
+                                        "WHERE (Tara1ID = ? OR Tara2ID = ?) AND (Scor <> '')), " +
+
+                                        "(SELECT COUNT(G.GolID)" +
+                                        "FROM goals G, matches M, players P " +
+                                        "WHERE (P.TaraID = ?) AND (M.MeciID = G.MeciID) AND (G.JucatorID = P.JucatorID) " +
+                                        "AND (G.Tip IN ('(A)', '(P)'))), " +
+
+                                        "(SELECT COUNT(G.GolID) " +
+                                        "FROM goals G, matches M, players P " +
+                                        "WHERE(P.TaraID = ?) " +
+                                        "AND (M.MeciID = G.MeciID) AND (G.JucatorID = P.JucatorID) AND (G.Tip = \"(OG)\")), " +
+
+                                        "(SELECT COUNT(G.GolID) " +
+                                        "FROM goals G, matches M, players P " +
+                                        "WHERE(P.TaraID = ?) " +
+                                        "AND (M.MeciID = G.MeciID) AND (G.JucatorID = P.JucatorID) AND (G.Tip = \"(P)\"))," +
+
+                                        "(SELECT COUNT(C.CardID)" +
+                                        "FROM cards C, matches M, players P " +
+                                        "WHERE (P.TaraID = ?) AND (M.MeciID = C.MeciID) AND (C.JucatorID = P.JucatorID)" +
+                                        "AND (C.Culoare = \"yellow\")), " +
+
+                                        "(SELECT COUNT(C.CardID)" +
+                                        "FROM cards C, matches M, players P " +
+                                        "WHERE (P.TaraID = ?) AND (M.MeciID = C.MeciID) AND (C.JucatorID = P.JucatorID)" +
+                                        "AND (C.Culoare = \"red\")) " +
+
+                                "FROM matches M, teams T, players P " +
+                                "WHERE (T.taraID = ?)";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        for(int i = 0; i < 8; i++) {
+                            preparedStatement.setString(i + 1, teamID);
+                        }
+                        resultSet = preparedStatement.executeQuery();
+
+                        while(resultSet.next()) {
+                            textArea.setText(textArea.getText().concat(
+                                            "Matches played: " + resultSet.getString(1) + "\n" +
+                                            "Goals scored: " + resultSet.getString(2) + "\n" +
+                                            "Own goals: " + resultSet.getString(3) + "\n" +
+                                            "Penalties scored: " + resultSet.getString(4) + "\n" +
+                                            "Yellow cards: " + resultSet.getString(5) + "\n" +
+                                            "Red cards: " + resultSet.getString(6) + "\n\n"));
+                        }
+
+                        query = "SELECT P.prenume, P.nume, (SELECT COUNT(G.JucatorID) " +
+                                "                           FROM goals G " +
+                                "                           WHERE (G.jucatorID = P.jucatorID) AND (G.Tip IN ('(A)', '(P)'))) " +
+                                "FROM players P " +
+                                "WHERE P.TaraID = ? " +
+                                "ORDER BY (SELECT COUNT(G.JucatorID) " +
+                                "          FROM goals G " +
+                                "          WHERE (G.jucatorID = P.jucatorID) AND (G.Tip IN ('(A)', '(P)'))) DESC " +
+                                "limit 1 ";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, teamID);
+
+                        resultSet = preparedStatement.executeQuery();
+
+                        while(resultSet.next()) {
+                            textArea.setText(textArea.getText().concat(
+                                    "Top scorer: " + resultSet.getString(1) + " " +
+                                            resultSet.getString(2) + " (" +
+                                            resultSet.getInt(3) + " goals)\n"));
+                        }
+
+                        query = "SELECT prenume, nume, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 " +
+                                "FROM players " +
+                                "WHERE DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 = (SELECT MIN(DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0) FROM players WHERE TaraID = ?) " +
+                                "AND (TaraID = ?) " +
+                                "limit 1";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, teamID);
+                        preparedStatement.setString(2, teamID);
+
+                        resultSet = preparedStatement.executeQuery();
+
+                        while(resultSet.next()) {
+                            textArea.setText(textArea.getText().concat(
+                                    "Youngest player: " + resultSet.getString(1) + " " +
+                                            resultSet.getString(2) + " (age " +
+                                            resultSet.getInt(3) + ")\n"));
+                        }
+
+                        query = "SELECT prenume, nume, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 " +
+                                "FROM players " +
+                                "WHERE DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 = (SELECT MAX(DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0) FROM players WHERE TaraID = ?) " +
+                                "AND (TaraID = ?) " +
+                                "limit 1";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, teamID);
+                        preparedStatement.setString(2, teamID);
+
+                        resultSet = preparedStatement.executeQuery();
+
+                        while(resultSet.next()) {
+                            textArea.setText(textArea.getText().concat(
+                                            "Oldest player: " + resultSet.getString(1) + " " +
+                                                                resultSet.getString(2) + " (age " +
+                                                                resultSet.getInt(3) + ")"));
                         }
 
                         connection.close();
@@ -151,7 +226,7 @@ public class TeamDetails {
         playersButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         playersButton.addActionListener(
                 e -> {
-                    textArea.setText("Name\t\tNumber\tPosition\tDate of Birth\tHeight\tGoals scored\n" +
+                    textArea.setText("Name\t\tNumber\tPosition\tDate of Birth\tHeight (m)\tGoals scored\n" +
                             "--------------------------------------------------------------------------" +
                             "--------------------------------------------------------------------------\n");
                     try {
@@ -160,7 +235,7 @@ public class TeamDetails {
                         PreparedStatement preparedStatement;
                         String query = "SELECT P.prenume, P.nume, P.numar, P.pozitie, P.datanasterii, P.inaltime, (SELECT COUNT(G.JucatorID) " +
                                 "                                                                FROM goals G " +
-                                "                                                                WHERE G.jucatorID = P.jucatorID AND tip IN ('(A)', '(P)')) " +
+                                "                                                                WHERE (G.jucatorID = P.jucatorID) AND (G.Tip IN ('(A)', '(P)'))) " +
                                 "FROM players P " +
                                 "WHERE P.TaraID = ? " +
                                 "ORDER BY P.positionID, P.numar";
@@ -186,7 +261,7 @@ public class TeamDetails {
                                             resultSet.getString(3) + "\t" +
                                             resultSet.getString(4) + "\t" +
                                             resultSet.getString(5) + "\t" +
-                                            resultSet.getString(6) + " m\t" +
+                                            resultSet.getString(6) + "\t         " +
                                             resultSet.getString(7) + "\n"));
                         }
 
