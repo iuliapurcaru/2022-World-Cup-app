@@ -169,8 +169,8 @@ public class Groups {
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
                         String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
-                                "FROM matches M, teams A, teams B, stadiums S, referees R " +
-                                "WHERE (M.MeciID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (M.ArbitruSefID = R.ArbitruSefID) " +
+                                "FROM matches M, teams A, teams B, stadiums S, referees R, referees_matches RM " +
+                                "WHERE (M.MeciID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (RM.MeciID = M.MeciID) AND (RM.ArbitruID = R.ArbitruSefID) " +
                                 "ORDER BY M.Data";
 
                         connection = DatabaseConnection.getConnection();

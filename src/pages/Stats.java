@@ -109,8 +109,8 @@ public class Stats {
         refereesButton.addActionListener(
                 e -> {
                     textArea.setText("There were a total of 36 referees from all six confederations.\n" +
-                            "\tNAME\t\tCOUNTRY\tSTADIUMS\n" +
-                            "\t----------------------------------------------------------------------------------\n");
+                            "\t\tNAME\t\tCOUNTRY\n" +
+                            "\t\t--------------------------------------------------------------------------\n");
 
                     try {
                         Connection connection = DatabaseConnection.getConnection();
@@ -123,7 +123,7 @@ public class Stats {
                         resultSet = preparedStatement.executeQuery();
 
                         while(resultSet.next()) {
-                            textArea.setText(textArea.getText().concat("\t" +
+                            textArea.setText(textArea.getText().concat("\t\t" +
                                     resultSet.getString(1) + " " +
                                     resultSet.getString(2) + "\t" +
                                     resultSet.getString(3) + "\n"));
@@ -146,8 +146,8 @@ public class Stats {
         stadiumsButton.addActionListener(
                 e -> {
                     textArea.setText("The matches were played on 8 stadiums in 5 different cities in Qatar.\n\n" +
-                            "\tSTADIUM\t\tCITY\tCAPACITY\tREFEREES\n" +
-                            "\t---------------------------------------------------------------------------------------------------------\n");
+                            "\t\tSTADIUM\t\tCITY\tCAPACITY\n" +
+                            "\t\t-------------------------------------------------------------------------------\n");
 
                     try {
                         Connection connection = DatabaseConnection.getConnection();
@@ -160,7 +160,7 @@ public class Stats {
                         resultSet = preparedStatement.executeQuery();
 
                         while(resultSet.next()) {
-                            textArea.setText(textArea.getText().concat("\t" +
+                            textArea.setText(textArea.getText().concat("\t\t" +
                                     resultSet.getString(1) + "\t" +
                                     resultSet.getString(2) + "\t    " +
                                     resultSet.getString(3) + "\n"));

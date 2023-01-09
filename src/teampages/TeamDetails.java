@@ -285,19 +285,22 @@ public class TeamDetails {
                 e -> {
                     textArea.setText("");
                     try {
-                        Connection connection;
+                        Connection connection = DatabaseConnection.getConnection();
                         ResultSet resultSet;
+                        ResultSet resultSet1;
                         PreparedStatement preparedStatement;
-                        String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta, M.Etapa " +
-                                "FROM matches M, teams A, teams B, stadiums S, referees R " +
-                                "WHERE (M.Tara1ID = ? OR M.Tara2ID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (M.ArbitruSefID = R.ArbitruSefID) " +
+                        String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, M.Etapa, R.Prenume, R.Nume, R.TaraProvenienta " +
+                                "FROM matches M, teams A, teams B, stadiums S, referees R, referees_matches RM " +
+                                "WHERE (M.Tara1ID = ? OR M.Tara2ID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) " +
+                                       "AND (M.StadionID = S.StadionID) AND (RM.MeciID = M.MeciID) " +
+                                       "AND (RM.ArbitruID = R.ArbitruSefID) AND (RM.Sef = \"yes\") " +
                                 "ORDER BY data";
 
-                        connection = DatabaseConnection.getConnection();
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, teamID);
                         preparedStatement.setString(2, teamID);
                         resultSet = preparedStatement.executeQuery();
+
                         int i = 0;
 
                         while(resultSet.next()) {
@@ -308,12 +311,13 @@ public class TeamDetails {
                                             resultSet.getString(3) + "\n" +   //team 2
                                             resultSet.getString(4) + "  " +   //time
                                             resultSet.getString(5) + "\n" +   //date
+                                            "Stage: " + resultSet.getString(9) + "\n" +
                                             resultSet.getString(7) + ", " +   //city
                                             resultSet.getString(6) + "\n" +   //stadium
                                             "Attendance: " + resultSet.getString(8) + "\n" +
-                                            "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
-                                            " (" + resultSet.getString(11) + ")\n" +
-                                            "Stage: " + resultSet.getString(12) + "\n\n"));
+                                            "Referee: " + resultSet.getString(10) + " " +
+                                            resultSet.getString(11) +
+                                            " (" + resultSet.getString(12) + ")\n\n"));
                         }
 
                         connection.close();
