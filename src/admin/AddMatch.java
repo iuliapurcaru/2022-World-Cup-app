@@ -30,10 +30,10 @@ public class AddMatch {
         addMatch.setBounds(30, 92, 180, 100);
         panel.add(addMatch);
 
-        JLabel addCountry = new JLabel("Teams");
-        addCountry.setFont(new Font("Century Gothic", Font.BOLD, 21));
-        addCountry.setBounds(30, 132, 210, 100);
-        panel.add(addCountry);
+        JLabel selectCountry = new JLabel("Teams");
+        selectCountry.setFont(new Font("Century Gothic", Font.BOLD, 21));
+        selectCountry.setBounds(30, 132, 210, 100);
+        panel.add(selectCountry);
 
         String[] countryID = new String[32];
         String[] countriesToChoose = new String[32];
@@ -103,24 +103,11 @@ public class AddMatch {
         country1ComboBox.setFont(new Font("Century Gothic", Font.PLAIN, 19));
         country1ComboBox.setBounds(30, 202, 300, 40);
         panel.add(country1ComboBox);
-//        String country1 = country1ComboBox.getItemAt(country1ComboBox.getSelectedIndex());
-//        String country1ID = null;
 
         JComboBox<String> country2ComboBox = new JComboBox<>(countriesToChoose);
         country2ComboBox.setFont(new Font("Century Gothic", Font.PLAIN, 19));
         country2ComboBox.setBounds(340, 202, 300, 40);
         panel.add(country2ComboBox);
-//        String country2 = country2ComboBox.getItemAt(country2ComboBox.getSelectedIndex());
-//        String country2ID = null;
-//
-//        for(int i = 0; i < 32; i++) {
-//            if(Objects.equals(countriesToChoose[i], country1)) {
-//                country1ID = countryID[i];
-//            }
-//            if(Objects.equals(countriesToChoose[i], country2)) {
-//                country2ID = countryID[i];
-//            }
-//        }
 
         JLabel addMatchLabel = new JLabel("Insert match number:");
         addMatchLabel.setFont(new Font("Century Gothic", Font.BOLD, 20));
@@ -166,13 +153,6 @@ public class AddMatch {
         stadiumsComboBox.setFont(new Font("Century Gothic", Font.PLAIN, 19));
         stadiumsComboBox.setBounds(140, 502, 300, 40);
         panel.add(stadiumsComboBox);
-//        String stadium = stadiumsComboBox.getItemAt(stadiumsComboBox.getSelectedIndex());
-//        String stadiumID = null;
-//        for(int i = 0; i < 8; i++) {
-//            if(Objects.equals(stadiumsToChoose[i], stadium)) {
-//                stadiumID = stadiumsID[i];
-//            }
-//        }
 
         JLabel addReferees = new JLabel("Referees");
         addReferees.setFont(new Font("Century Gothic", Font.BOLD, 21));
@@ -190,23 +170,6 @@ public class AddMatch {
         referee3ComboBox.setFont(new Font("Century Gothic", Font.PLAIN, 19));
         referee3ComboBox.setBounds(760, 562, 300, 40);
         panel.add(referee3ComboBox);
-//        String referee1 = referee1ComboBox.getItemAt(referee1ComboBox.getSelectedIndex());
-//        String referee1ID = null;
-//        String referee2 = referee2ComboBox.getItemAt(referee2ComboBox.getSelectedIndex());
-//        String referee2ID = null;
-//        String referee3 = referee3ComboBox.getItemAt(referee3ComboBox.getSelectedIndex());
-//        String referee3ID = null;
-//        for(int i = 0; i < 36; i++) {
-//            if(Objects.equals(refereesToChoose[i], referee1)) {
-//                referee1ID = refereesID[i];
-//            }
-//            if(Objects.equals(refereesToChoose[i], referee2)) {
-//                referee2ID = refereesID[i];
-//            }
-//            if(Objects.equals(refereesToChoose[i], referee3)) {
-//                referee3ID = refereesID[i];
-//            }
-//        }
 
         JButton addButton = new JButton("ADD MATCH");
         addButton.setFont(new Font("Century Gothic", Font.BOLD, 20));
@@ -214,13 +177,6 @@ public class AddMatch {
         addButton.setForeground(Color.WHITE);
         addButton.setBackground(Color.getHSBColor(190.74f, 0.6909f, 0.516f));
         addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//        String finalCountry1ID = country1ID;
-//        String finalCountry2ID = country2ID;
-//        String finalStadiumID = stadiumID;
-//        String finalReferee1ID = referee1ID;
-//
-//        String finalReferee2ID = referee2ID;
-//        String finalReferee3ID = referee3ID;
         addButton.addActionListener(
                 e -> {
                     String country1 = country1ComboBox.getItemAt(country1ComboBox.getSelectedIndex());
@@ -264,9 +220,8 @@ public class AddMatch {
                     }
                     try {
                         Connection connection = DatabaseConnection.getConnection();
-
-                        ResultSet resultSet;
                         PreparedStatement preparedStatement;
+
                         String insertMatch = "INSERT INTO matches " +
                                 "(MeciID, Tara1ID, Tara2ID, Etapa, Data, Ora, StadionID) " +
                                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
