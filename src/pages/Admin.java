@@ -3,7 +3,6 @@ package pages;
 import awt.BuildFrame;
 import awt.Buttons;
 import database.DatabaseConnection;
-import teampages.TeamDetails;
 
 import javax.swing.*;
 import java.awt.*;
