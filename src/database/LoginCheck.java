@@ -1,5 +1,6 @@
 package database;
 
+import pages.Admin;
 import pages.Homepage;
 
 import javax.swing.*;
@@ -30,7 +31,12 @@ public class LoginCheck {
 
                 if (resultSet.next() && Objects.equals(resultSet.getString(1), password)) {
                     frame.dispose();
-                    Homepage.getHomepage(username);
+                    if(Objects.equals(username, "admin")) {
+                        Admin.getEdit();
+                    }
+                    else {
+                        Homepage.getHomepage(username);
+                    }
                 }
                 else {
                     JLabel label = new JLabel("Incorrect username or password!");
