@@ -20,6 +20,9 @@ public class DeleteMatch {
         panel.setLayout(null);
         frame.add(panel);
 
+        JLabel optionPaneFont = new JLabel();
+        optionPaneFont.setFont(new Font("Century Gothic", Font.BOLD, 18));
+
         JButton[] buttons = Buttons.getAdminButtons(frame);
         for(int i = 0; i < 4; i++) {
             panel.add(buttons[i]);
@@ -102,7 +105,7 @@ public class DeleteMatch {
                         }
                     }
 
-                    int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?");
+                    int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this match?");
                     if(input == 0) {
                         Connection connection;
                         PreparedStatement preparedStatement;
