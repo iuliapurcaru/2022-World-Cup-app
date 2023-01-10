@@ -1,5 +1,9 @@
 package awt;
 
+import admin.AddMatch;
+import admin.DeleteMatch;
+import admin.UpdateMatch;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import pages.*;
 import teampages.Teams;
 
@@ -114,6 +118,66 @@ public class Buttons {
         buttons[7].setBackground(Color.getHSBColor(233.74f, 0.97f, 0.401f));
         buttons[7].setEnabled(false);
         buttons[7].setBorderPainted(false);
+
+        return buttons;
+    }
+
+    public static JButton[] getAdminButtons(JFrame frame) {
+
+        JButton[] buttons = new JButton[4];
+        Font font = new Font("Century Gothic", Font.BOLD, 20);
+
+        buttons[0] = new JButton("LOGOUT");
+        buttons[0].setBounds(0, 0, 119, 90);
+        buttons[0].addActionListener(
+                e -> {
+                    frame.dispose();
+                    Login.getLogin();
+                }
+
+        );
+
+        buttons[1] = new JButton("ADD MATCH");
+        buttons[1].setBounds(119, 0, 236, 90);
+        buttons[1].addActionListener(
+                e -> {
+                    frame.dispose();
+                    AddMatch.addMatch();
+                }
+
+        );
+
+        buttons[2] = new JButton("UPDATE MATCH");
+        buttons[2].setBounds(355, 0, 236, 90);
+        buttons[2].addActionListener(
+                e -> {
+                    frame.dispose();
+                    UpdateMatch.updateMatch();
+                }
+
+        );
+
+        buttons[3] = new JButton("DELETE MATCH");
+        buttons[3].setBounds(591, 0, 236, 90);
+        buttons[3].addActionListener(
+                e -> {
+                    frame.dispose();
+                    DeleteMatch.deleteMatch();
+                }
+
+        );
+
+        for(int i = 0; i < 4; i++) {
+            buttons[i].setFont(font);
+            buttons[i].setVerticalTextPosition(SwingConstants.BOTTOM);
+            buttons[i].setHorizontalTextPosition(SwingConstants.CENTER);
+            buttons[i].setForeground(Color.WHITE);
+            buttons[i].setBackground(Color.getHSBColor(233.74f, 0.97f, 0.401f));
+            buttons[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            buttons[i].setBorderPainted(false);
+            addButtonMouseAdapter(buttons[i]);
+        }
+
 
         return buttons;
     }

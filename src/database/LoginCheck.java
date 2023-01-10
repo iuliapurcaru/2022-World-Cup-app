@@ -1,6 +1,6 @@
 package database;
 
-import pages.Admin;
+import admin.AddMatch;
 import pages.Homepage;
 
 import javax.swing.*;
@@ -32,7 +32,7 @@ public class LoginCheck {
                 if (resultSet.next() && Objects.equals(resultSet.getString(1), password)) {
                     frame.dispose();
                     if(Objects.equals(username, "admin")) {
-                        Admin.getEdit();
+                        AddMatch.addMatch();
                     }
                     else {
                         Homepage.getHomepage(username);
