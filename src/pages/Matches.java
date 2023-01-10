@@ -128,76 +128,96 @@ public class Matches {
                         }
                     }
 
-                    try {
+                    getMatchDetails(textArea, inputMatch);
 
-                        Connection connection = DatabaseConnection.getConnection();
-                        ResultSet resultSet;
-                        PreparedStatement preparedStatement;
-                        String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
-                                "FROM matches M, teams A, teams B, stadiums S, referees R, referees_matches RM " +
-                                "WHERE (M.MeciID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (RM.MeciID = M.MeciID) AND (RM.ArbitruID = R.ArbitruSefID) " +
-                                "ORDER BY M.data";
-
-                        preparedStatement = connection.prepareStatement(query);
-                        preparedStatement.setString(1, inputMatch);
-                        resultSet = preparedStatement.executeQuery();
-
-                        while (resultSet.next()) {
-                            textArea.setText(
-                                            resultSet.getString(1) + "\t" +         //team 1
-                                            resultSet.getString(2) + "          " + //score
-                                            resultSet.getString(3) + "\n" +         //team 2
-                                            resultSet.getString(4) + "  " +         //time
-                                            resultSet.getString(5) + "\n" +         //date
-                                            resultSet.getString(7) + ", " +         //city
-                                            resultSet.getString(6) + "\n" +         //stadium
-                                            "Attendance: " + resultSet.getString(8) + "\n" +
-                                            "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
-                                            " (" + resultSet.getString(11) + ")\n\n");
-                        }
-
-                        query = "SELECT P.Prenume, P.Nume, G.Minut, G.Tip, T.Denumire " +
-                                "FROM goals G, players P, teams T " +
-                                "WHERE (G.MeciID = ?) AND (P.JucatorID = G.JucatorID) AND (T.TaraID = P.TaraID) " +
-                                "ORDER BY G.GolID";
-
-                        preparedStatement = connection.prepareStatement(query);
-                        preparedStatement.setString(1, inputMatch);
-                        resultSet = preparedStatement.executeQuery();
-
-                        textArea.setText(textArea.getText().concat("Goals:\n"));
-                        String name;
-                        String pName;
-                        String type;
-
-                        while (resultSet.next()) {
-                            name = resultSet.getString(1);
-                            if(Objects.equals(name, "")) {
-                                pName = "";
-                            }
-                            else {
-                                pName = name.charAt(0) + ". ";
-                            }
-
-                            type = resultSet.getString(4);
-                            if(Objects.equals(type, "(A)")) {
-                                type = "    ";
-                            }
-
-                            textArea.setText(textArea.getText().concat(
-                                    pName +   //initial
-                                            resultSet.getString(2) + " (" +         //name
-                                            resultSet.getString(5) + ")\t" +        //country
-                                            resultSet.getString(3) + " " +          //minute
-                                            type + "\n"));                                    //type
-                        }
-                    }
-                    catch (Exception err){
-                        err.printStackTrace();
-                    }
                 }
         );
 
+    }
+
+    public static void getMatchDetails(JTextArea textArea, String inputMatch) {
+        try {
+
+            Connection connection = DatabaseConnection.getConnection();
+            ResultSet resultSet;
+            PreparedStatement preparedStatement;
+            String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori " +
+                    "FROM matches M, teams A, teams B, stadiums S " +
+                    "WHERE (M.MeciID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) " +
+                    "ORDER BY M.Data";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, inputMatch);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                textArea.setText(
+                        resultSet.getString(1) + "\t" +   //team 1
+                                resultSet.getString(2) + "          " +         //
+                                resultSet.getString(3) + "\n" +         //team 2
+                                resultSet.getString(4) + "  " +         //time
+                                resultSet.getString(5) + "\n" +         //date
+                                resultSet.getString(7) + ", " +         //city
+                                resultSet.getString(6) + "\n" +         //stadium
+                                "Attendance: " + resultSet.getString(8) + "\n" +
+                                "Referees:\n");
+            }
+
+            query = "SELECT R.Prenume, R.Nume, R.TaraProvenienta " +
+                    "FROM referees R, referees_matches RM, matches M " +
+                    "WHERE (M.MeciID = ?) AND (RM.MeciID = M.MeciID) AND (RM.ArbitruID = R.ArbitruSefID)";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, inputMatch);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                textArea.setText(textArea.getText().concat(
+                        resultSet.getString(1) + " " + resultSet.getString(2) +
+                                " (" + resultSet.getString(3) + ")\n"));
+            }
+
+            textArea.setText(textArea.getText().concat("\n"));
+
+            query = "SELECT P.Prenume, P.Nume, G.Minut, G.Tip, T.Denumire " +
+                    "FROM goals G, players P, teams T " +
+                    "WHERE (G.MeciID = ?) AND (P.JucatorID = G.JucatorID) AND (T.TaraID = P.TaraID) " +
+                    "ORDER BY G.GolID";
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, inputMatch);
+            resultSet = preparedStatement.executeQuery();
+
+            textArea.setText(textArea.getText().concat("Goals:\n"));
+            String name;
+            String pName;
+            String type;
+
+            while (resultSet.next()) {
+                name = resultSet.getString(1);
+                if(Objects.equals(name, "")) {
+                    pName = "";
+                }
+                else {
+                    pName = name.charAt(0) + ". ";
+                }
+
+                type = resultSet.getString(4);
+                if(Objects.equals(type, "(A)")) {
+                    type = "    ";
+                }
+
+                textArea.setText(textArea.getText().concat(
+                        pName +   //initial
+                                resultSet.getString(2) + " (" +         //name
+                                resultSet.getString(5) + ")\t" +        //country
+                                resultSet.getString(3) + " " +          //minute
+                                type + "\n"));                                    //type
+            }
+        }
+        catch (Exception err){
+            err.printStackTrace();
+        }
     }
 
 }

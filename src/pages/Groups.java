@@ -93,6 +93,10 @@ public class Groups {
                 e -> {
                     String input = comboBox.getItemAt(comboBox.getSelectedIndex());
                     groupLabel.setText(input);
+                    int wins;
+                    int draws;
+                    int losses;
+
                     tableTextArea.setText("\n\t                POS     TEAM\tPLAYED      WINS     DRAWS     LOSSES     POINTS\n" +
                             "\t                ----------------------------------------" +
                             "--------------------------------------------------------\n");
@@ -102,7 +106,7 @@ public class Groups {
 
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String query = "SELECT T.denumire, T.PunctajGrupe, T.GroupWins, T.GroupDraws, T.GroupLosses " +
+                        String query = "SELECT T.denumire, T.PunctajGrupe " +
                                        "FROM teams T " +
                                        "WHERE T.Grupa = ? " +
                                        "ORDER BY T.PunctajGrupe DESC";
@@ -114,13 +118,54 @@ public class Groups {
                         int counter = 0;
                         while(resultSet.next()) {
                             counter++;
+                            wins = 0;
+                            draws = 0;
+                            losses = 0;
+
+                            switch(resultSet.getString(2)) {
+                                case "9":
+                                    wins = 3;
+                                    break;
+                                case "7":
+                                    wins = 2;
+                                    draws = 1;
+                                    break;
+                                case "6":
+                                    wins = 2;
+                                    losses = 1;
+                                    break;
+                                case "5":
+                                    wins = 1;
+                                    draws = 2;
+                                    break;
+                                case "4":
+                                    wins = 1;
+                                    draws = 1;
+                                    losses = 1;
+                                    break;
+                                case "3":
+                                    wins = 1;
+                                    losses = 2;
+                                    break;
+                                case "2":
+                                    draws = 2;
+                                    losses = 1;
+                                    break;
+                                case "1":
+                                    draws = 1;
+                                    losses = 2;
+                                    break;
+                                default:
+                                    losses = 3;
+                            }
+
                             tableTextArea.setText(tableTextArea.getText().concat(
                                           "\t                 " + counter + "\t  " +
                                                 resultSet.getString(1) + "\t" +
                                                 "     3       " +
-                                                "       " + resultSet.getString(3) + "      " +
-                                                "       " + resultSet.getString(4) + "        " +
-                                                "       " + resultSet.getString(5) + "              " +
+                                                "       " + wins + "      " +
+                                                "       " + draws + "        " +
+                                                "       " + losses + "              " +
                                                 resultSet.getString(2) + "\n"));
                         }
 
@@ -163,74 +208,8 @@ public class Groups {
                         }
                     }
 
-                    try {
+                    Matches.getMatchDetails(matchesTextArea, inputMatch);
 
-                        Connection connection;
-                        ResultSet resultSet;
-                        PreparedStatement preparedStatement;
-                        String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, R.Prenume, R.Nume, R.TaraProvenienta " +
-                                "FROM matches M, teams A, teams B, stadiums S, referees R, referees_matches RM " +
-                                "WHERE (M.MeciID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) AND (M.StadionID = S.StadionID) AND (RM.MeciID = M.MeciID) AND (RM.ArbitruID = R.ArbitruSefID) " +
-                                "ORDER BY M.Data";
-
-                        connection = DatabaseConnection.getConnection();
-                        preparedStatement = connection.prepareStatement(query);
-                        preparedStatement.setString(1, inputMatch);
-                        resultSet = preparedStatement.executeQuery();
-
-                        while (resultSet.next()) {
-                            matchesTextArea.setText(
-                                            resultSet.getString(1) + "\t" +   //team 1
-                                            resultSet.getString(2) + "          " +         //
-                                            resultSet.getString(3) + "\n" +         //team 2
-                                            resultSet.getString(4) + "  " +         //time
-                                            resultSet.getString(5) + "\n" +         //date
-                                            resultSet.getString(7) + ", " +         //city
-                                            resultSet.getString(6) + "\n" +         //stadium
-                                            "Attendance: " + resultSet.getString(8) + "\n" +
-                                            "Referee: " + resultSet.getString(9) + " " + resultSet.getString(10) +
-                                            " (" + resultSet.getString(11) + ")\n\n");
-                        }
-
-                        query = "SELECT P.Prenume, P.Nume, G.Minut, G.Tip, T.Denumire " +
-                                "FROM goals G, players P, teams T " +
-                                "WHERE (G.MeciID = ?) AND (P.JucatorID = G.JucatorID) AND (T.TaraID = P.TaraID) " +
-                                "ORDER BY G.Minut";
-
-                        preparedStatement = connection.prepareStatement(query);
-                        preparedStatement.setString(1, inputMatch);
-                        resultSet = preparedStatement.executeQuery();
-
-                        matchesTextArea.setText(matchesTextArea.getText().concat("Goals:\n"));
-                        String name;
-                        String pName;
-                        String type;
-
-                        while (resultSet.next()) {
-                            name = resultSet.getString(1);
-                            if(Objects.equals(name, "")) {
-                                pName = "";
-                            }
-                            else {
-                                pName = name.charAt(0) + ". ";
-                            }
-
-                            type = resultSet.getString(4);
-                            if(Objects.equals(type, "(A)")) {
-                                type = "    ";
-                            }
-
-                            matchesTextArea.setText(matchesTextArea.getText().concat(
-                                            pName +   //initial
-                                            resultSet.getString(2) + " (" +         //name
-                                            resultSet.getString(5) + ")\t" +        //country
-                                            resultSet.getString(3) + " " +          //minute
-                                            type + "\n"));                                    //type
-                        }
-                    }
-                    catch (Exception err){
-                        err.printStackTrace();
-                    }
                 }
         );
 

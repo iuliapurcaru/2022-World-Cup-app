@@ -76,7 +76,33 @@ public class Stats {
                             avg = (float)nGoals[0]/nGoals[1];
                             avgS = String.format("%.02f", avg);
                             textArea.setText(textArea.getText().concat( " goals scored in " + nGoals[1] + " matches, " +
-                                    "for an average of " + avgS + " goals per match."));
+                                    "for an average of " + avgS + " goals per match.\n"));
+                        }
+
+                        textArea.setText(textArea.getText().concat(
+                                "\t\tNAME\t\t        GOALS\n" +
+                                "\t\t-------------------------------------" +
+                                        "-------------------------------\n"));
+
+                        query = "SELECT P.prenume, P.nume, T.Denumire, (SELECT COUNT(G.JucatorID) " +
+                                                                       "FROM goals G " +
+                                                                       "WHERE (G.jucatorID = P.jucatorID) AND (G.Tip IN ('(A)', '(P)'))) AS nGoals " +
+                                "FROM players P, teams T " +
+                                "WHERE P.TaraID = T.TaraID " +
+                                "HAVING nGoals > 0 " +
+                                "ORDER BY nGoals DESC";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        resultSet = preparedStatement.executeQuery();
+
+
+                        while (resultSet.next()) {
+                            textArea.setText(textArea.getText().concat("\t\t" +
+                                    resultSet.getString(1) + " " +
+                                            resultSet.getString(2) + " (" +
+                                            resultSet.getString(3) + ")\t        " +
+                                            resultSet.getString(4) + "\n"
+                            ));
                         }
 
                     }
@@ -95,7 +121,73 @@ public class Stats {
         disciplineButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         disciplineButton.addActionListener(
                 e -> {
+                    try {
 
+                        Connection connection = DatabaseConnection.getConnection();
+                        ResultSet resultSet;
+                        PreparedStatement preparedStatement;
+                        String query = "SELECT COUNT(*) " +
+                                "FROM cards ";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while (resultSet.next()) {
+                            textArea.setText("There were given a total of " + resultSet.getString(1));
+                        }
+
+                        query = "SELECT COUNT(*) " +
+                                "FROM cards " +
+                                "WHERE culoare = \"yellow\"";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while (resultSet.next()) {
+                            textArea.setText(textArea.getText().concat(" cards, where yellow cards " + resultSet.getString(1)));
+                        }
+
+                        query = "SELECT COUNT(*) " +
+                                "FROM cards " +
+                                "WHERE culoare = \"red\"";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while (resultSet.next()) {
+                            textArea.setText(textArea.getText().concat(" and red cards " + resultSet.getString(1) + ".\n"));
+                        }
+
+                        textArea.setText(textArea.getText().concat(
+                                "\t          NAME\t\t\tCARD\tMATCH\n" +
+                                        "\t          -----------------------------------------------" +
+                                        "------------------------------------------------------------\n"));
+
+                        query = "SELECT P.prenume, P.nume, T.Denumire, C.Culoare, CONCAT(A.Denumire,\" - \", B.Denumire) " +
+                                "FROM players P, teams T, cards C, matches M, teams A, teams B " +
+                                "WHERE (P.TaraID = T.TaraID) " +
+                                "    AND (M.MeciID = C.MeciID) " +
+                                "AND (C.JucatorID = P.JucatorID) " +
+                                "    AND (M.Tara1ID = A.TaraID and M.Tara2ID = B.TaraID) " +
+                                "ORDER BY T.Denumire";
+
+                        preparedStatement = connection.prepareStatement(query);
+                        resultSet = preparedStatement.executeQuery();
+
+                        while (resultSet.next()) {
+                            textArea.setText(textArea.getText().concat("\t          " +
+                                    resultSet.getString(1) + " " +
+                                    resultSet.getString(2) + " (" +
+                                    resultSet.getString(3) + ")\t" +
+                                    resultSet.getString(4) + "\t" +
+                                    resultSet.getString(5) + "\n"
+                            ));
+                        }
+
+                    }
+                    catch (Exception err){
+                        err.printStackTrace();
+                    }
                 }
         );
         panel.add(disciplineButton);
@@ -116,16 +208,23 @@ public class Stats {
                         Connection connection = DatabaseConnection.getConnection();
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
-                        String query = "SELECT prenume, nume, TaraProvenienta " +
-                                "FROM referees";
+                        String query = "SELECT prenume, nume, TaraProvenienta FROM referees";
 
                         preparedStatement = connection.prepareStatement(query);
                         resultSet = preparedStatement.executeQuery();
+                        String tab;
 
                         while(resultSet.next()) {
+                            if (resultSet.getString(1).length() + resultSet.getString(2).length() < 14) {
+                                tab = "\t\t";
+                            }
+                            else {
+                                tab = "\t";
+                            }
+
                             textArea.setText(textArea.getText().concat("\t\t" +
                                     resultSet.getString(1) + " " +
-                                    resultSet.getString(2) + "\t" +
+                                    resultSet.getString(2) + tab +
                                     resultSet.getString(3) + "\n"));
                         }
 

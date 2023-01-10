@@ -170,13 +170,13 @@ public class TeamDetails {
                                             resultSet.getInt(3) + " goals)\n"));
                         }
 
-                        query = "SELECT prenume, nume, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 " +
+                        String query1 = "SELECT prenume, nume, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 " +
                                 "FROM players " +
                                 "WHERE DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 = (SELECT MIN(DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0) FROM players WHERE TaraID = ?) " +
                                 "AND (TaraID = ?) " +
                                 "limit 1";
 
-                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement = connection.prepareStatement(query1);
                         preparedStatement.setString(1, teamID);
                         preparedStatement.setString(2, teamID);
 
@@ -189,13 +189,13 @@ public class TeamDetails {
                                             resultSet.getInt(3) + ")\n"));
                         }
 
-                        query = "SELECT prenume, nume, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 " +
+                        String query2 = "SELECT prenume, nume, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 " +
                                 "FROM players " +
                                 "WHERE DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0 = (SELECT MAX(DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), DataNasterii)), '%Y') + 0) FROM players WHERE TaraID = ?) " +
                                 "AND (TaraID = ?) " +
                                 "limit 1";
 
-                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement = connection.prepareStatement(query2);
                         preparedStatement.setString(1, teamID);
                         preparedStatement.setString(2, teamID);
 
@@ -248,7 +248,7 @@ public class TeamDetails {
                         String tab;
 
                         while(resultSet.next()) {
-                            if (resultSet.getString(1).length() + resultSet.getString(2).length() < 16) {
+                            if (resultSet.getString(1).length() + resultSet.getString(2).length() < 21) {
                                 tab = "\t\t";
                             }
                             else {
@@ -287,7 +287,6 @@ public class TeamDetails {
                     try {
                         Connection connection = DatabaseConnection.getConnection();
                         ResultSet resultSet;
-                        ResultSet resultSet1;
                         PreparedStatement preparedStatement;
                         String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, M.Etapa, R.Prenume, R.Nume, R.TaraProvenienta " +
                                 "FROM matches M, teams A, teams B, stadiums S, referees R, referees_matches RM " +
