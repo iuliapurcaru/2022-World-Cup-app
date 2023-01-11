@@ -87,9 +87,9 @@ public class Matches {
                         PreparedStatement preparedStatement;
 
                         String query = "SELECT A.Denumire, B.Denumire, M.MeciID " +
-                                "FROM matches M, teams A, teams B " +
-                                "WHERE (M.Etapa = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID)" +
-                                "ORDER BY M.data, M.ora";
+                                        "FROM matches M, teams A, teams B " +
+                                        "WHERE (M.Etapa = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID)" +
+                                        "ORDER BY M.data, M.ora";
 
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, input);

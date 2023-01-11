@@ -64,7 +64,8 @@ public class Stats {
                         }
 
                         query = "SELECT COUNT(*) " +
-                                "FROM matches";
+                                "FROM matches" +
+                                "WHERE scor <> \"  -  \"";
 
                         preparedStatement = connection.prepareStatement(query);
                         resultSet = preparedStatement.executeQuery();
@@ -166,9 +167,9 @@ public class Stats {
                         query = "SELECT P.prenume, P.nume, T.Denumire, C.Culoare, CONCAT(A.Denumire,\" - \", B.Denumire) " +
                                 "FROM players P, teams T, cards C, matches M, teams A, teams B " +
                                 "WHERE (P.TaraID = T.TaraID) " +
-                                "    AND (M.MeciID = C.MeciID) " +
-                                "AND (C.JucatorID = P.JucatorID) " +
-                                "    AND (M.Tara1ID = A.TaraID and M.Tara2ID = B.TaraID) " +
+                                        "AND (M.MeciID = C.MeciID) " +
+                                        "AND (C.JucatorID = P.JucatorID) " +
+                                        "AND (M.Tara1ID = A.TaraID and M.Tara2ID = B.TaraID) " +
                                 "ORDER BY T.Denumire";
 
                         preparedStatement = connection.prepareStatement(query);

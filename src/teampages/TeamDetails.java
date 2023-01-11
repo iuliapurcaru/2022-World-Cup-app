@@ -83,8 +83,8 @@ public class TeamDetails {
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
                         String query = "SELECT DISTINCT T.confederatie, T.antrenor, P.prenume, P.nume, T.Grupa " +
-                                "FROM matches M, teams T, players P " +
-                                "WHERE (T.taraID = ?) AND (T.capitanID = P.jucatorID)";
+                                        "FROM matches M, teams T, players P " +
+                                        "WHERE (T.taraID = ?) AND (T.capitanID = P.jucatorID)";
 
                         connection = DatabaseConnection.getConnection();
                         preparedStatement = connection.prepareStatement(query);
@@ -289,11 +289,11 @@ public class TeamDetails {
                         ResultSet resultSet;
                         PreparedStatement preparedStatement;
                         String query = "SELECT A.Denumire, M.scor, B.Denumire, M.ora, M.data, S.Denumire, S.Oras, M.NrSpectatori, M.Etapa, R.Prenume, R.Nume, R.TaraProvenienta " +
-                                "FROM matches M, teams A, teams B, stadiums S, referees R, referees_matches RM " +
-                                "WHERE (M.Tara1ID = ? OR M.Tara2ID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) " +
-                                       "AND (M.StadionID = S.StadionID) AND (RM.MeciID = M.MeciID) " +
-                                       "AND (RM.ArbitruID = R.ArbitruSefID) AND (RM.Sef = \"yes\") " +
-                                "ORDER BY data";
+                                       "FROM matches M, teams A, teams B, stadiums S, referees R, referees_matches RM " +
+                                       "WHERE (M.Tara1ID = ? OR M.Tara2ID = ?) AND (M.Tara1ID = A.TaraID AND M.Tara2ID = B.TaraID) " +
+                                                "AND (M.StadionID = S.StadionID) AND (RM.MeciID = M.MeciID) " +
+                                                "AND (RM.ArbitruID = R.ArbitruSefID) AND (RM.Sef = \"yes\") " +
+                                       "ORDER BY M.Data";
 
                         preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, teamID);
