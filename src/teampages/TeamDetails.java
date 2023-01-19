@@ -248,7 +248,7 @@ public class TeamDetails {
                         String tab;
 
                         while(resultSet.next()) {
-                            if (resultSet.getString(1).length() + resultSet.getString(2).length() < 21) {
+                            if (resultSet.getString(1).length() + resultSet.getString(2).length() < 18) {
                                 tab = "\t\t";
                             }
                             else {
