@@ -63,11 +63,11 @@ public class Stats {
                             textArea.setText("There were " + nGoals[0]);
                         }
 
-                        query = "SELECT COUNT(*) " +
-                                "FROM matches" +
+                        String query2 = "SELECT COUNT(*) " +
+                                "FROM matches " +
                                 "WHERE scor <> \"  -  \"";
 
-                        preparedStatement = connection.prepareStatement(query);
+                        preparedStatement = connection.prepareStatement(query2);
                         resultSet = preparedStatement.executeQuery();
                         float avg;
                         String avgS;
@@ -91,7 +91,7 @@ public class Stats {
                                 "FROM players P, teams T " +
                                 "WHERE P.TaraID = T.TaraID " +
                                 "HAVING nGoals > 0 " +
-                                "ORDER BY nGoals DESC";
+                                "ORDER BY nGoals DESC, T.Denumire";
 
                         preparedStatement = connection.prepareStatement(query);
                         resultSet = preparedStatement.executeQuery();

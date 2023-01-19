@@ -25,6 +25,9 @@ public class AddMatch {
             panel.add(buttons[i]);
         }
 
+        JLabel optionPaneFont = new JLabel();
+        optionPaneFont.setFont(new Font("Century Gothic", Font.BOLD, 18));
+
         JLabel addMatch = new JLabel("Add a match");
         addMatch.setFont(new Font("Century Gothic", Font.BOLD, 25));
         addMatch.setBounds(30, 92, 180, 100);
@@ -263,6 +266,9 @@ public class AddMatch {
                     catch (Exception err){
                         err.printStackTrace();
                     }
+
+                    optionPaneFont.setText("Match successfully added!");
+                    JOptionPane.showMessageDialog(null, optionPaneFont);
                 }
         );
         panel.add(addButton);

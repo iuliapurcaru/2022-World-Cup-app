@@ -87,7 +87,7 @@ public class UpdateMatch {
         addMatchScore.setBounds(30, 292, 270, 100);
         panel.add(addMatchScore);
         JTextField matchScore = new JTextField();
-        matchScore.setBounds(260,322,60,40);
+        matchScore.setBounds(260,322,80,40);
         matchScore.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         panel.add(matchScore);
 
@@ -96,7 +96,7 @@ public class UpdateMatch {
         addMatchAttendance.setBounds(30, 352, 270, 100);
         panel.add(addMatchAttendance);
         JTextField matchAttendance = new JTextField();
-        matchAttendance.setBounds(280,382,60,40);
+        matchAttendance.setBounds(280,382,80,40);
         matchAttendance.setFont(new Font("Century Gothic", Font.PLAIN, 20));
         panel.add(matchAttendance);
 

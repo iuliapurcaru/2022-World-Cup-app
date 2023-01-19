@@ -123,6 +123,9 @@ public class DeleteMatch {
                             err.printStackTrace();
                         }
 
+                        optionPaneFont.setText("Match successfully deleted!");
+                        JOptionPane.showMessageDialog(null, optionPaneFont);
+
                     }
 
                 }
